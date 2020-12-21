@@ -31,7 +31,7 @@
             app:srcCompat="@drawable/parking_icon" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/emailEditText"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
@@ -46,14 +46,14 @@
             android:inputType="textPersonName"
             android:paddingStart="20dp"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
+            app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/infoTextView" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/passwordEditText"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
@@ -71,7 +71,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+            app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
 
         <TextView
             android:id="@+id/titleTextView"
@@ -110,7 +110,7 @@
         app:srcCompat="@drawable/logo_terrasol" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/loginButton"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
