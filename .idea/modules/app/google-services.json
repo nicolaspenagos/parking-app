@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "527324516861",
+    "project_id": "hotel-terrasol-parqueadero",
+    "storage_bucket": "hotel-terrasol-parqueadero.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:527324516861:android:992bc014491e91d309c994",
+        "android_client_info": {
+          "package_name": "com.example.parkingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "527324516861-biemlvj8b6qdtdfrbckrnu2nbkjb2u2p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.parkingapp",
+            "certificate_hash": "989af0aff3e58d7d9897c69dcb5abe90f1617029"
+          }
+        },
+        {
+          "client_id": "527324516861-otqosccl5a531f0tml9u7chi1gcf46v0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmCfnNkof4VpCVPkPY3PIkDhV3YdNU8qY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "527324516861-otqosccl5a531f0tml9u7chi1gcf46v0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
