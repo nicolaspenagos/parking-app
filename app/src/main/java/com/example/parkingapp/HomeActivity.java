@@ -14,6 +14,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -31,7 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 /*
  * This class will contains the entered vehicles and will have the main functions.
  */
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
+public class HomeActivity extends AppCompatActivity implements View.OnTouchListener{
 
     // -------------------------------------
     // Firebase
@@ -88,7 +90,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             plate5EditText = findViewById(R.id.plate5EditText);
             plate6EditText = findViewById(R.id.plate6EditText);
 
-            logoutButton.setOnClickListener(this);
+            logoutButton.setOnTouchListener(this);
+            profileButton.setOnTouchListener(this);
+            enterVehicleButton.setOnTouchListener(this);
+            searchButton.setOnTouchListener(this);
 
             recoverUser();
         }
@@ -96,32 +101,76 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
+    public boolean onTouch(View v, MotionEvent event) {
 
         switch (v.getId()){
 
             case R.id.logoutButton:
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog)
-                        .setTitle("Cerrar Sesión")
-                        .setMessage("¿Está seguro que desea cerrar sesión?")
-                        .setNegativeButton("No", (dialog, id)->{
-                            dialog.dismiss();
-                        })
-                        .setPositiveButton("Si", (dialog, id)->{
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    logoutButton.setImageResource(R.drawable.go_back_arrow_pressed);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
 
-                            auth.signOut();
-                            goToLogin();
+                    logoutButton.setImageResource(R.drawable.go_back_arrow);
 
-                        });
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog)
+                            .setTitle("Cerrar Sesión")
+                            .setMessage("¿Está seguro que desea cerrar sesión?")
+                            .setNegativeButton("No", (dialog, id)->{
+                                dialog.dismiss();
+                            })
+                            .setPositiveButton("Si", (dialog, id)->{
 
-                builder.show();
+                                auth.signOut();
+                                goToLogin();
+
+                            });
+
+                    builder.show();
+
+                }
 
                 break;
 
-        }
+            case R.id.profileButton:
 
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    profileButton.setImageResource(R.drawable.user_pressed);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+
+                    profileButton.setImageResource(R.drawable.user);
+
+                }
+
+                break;
+
+            case R.id.enterVehicleButton:
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    enterVehicleButton.setBackgroundResource(R.drawable.pressed_button_background);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+
+                    enterVehicleButton.setBackgroundResource(R.drawable.button_background);
+
+                }
+
+                break;
+
+            case R.id.searchButton:
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    searchButton.setBackgroundResource(R.drawable.pressed_button_background);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+
+                    searchButton.setBackgroundResource(R.drawable.button_background);
+
+                }
+
+                break;
+        }
+        return true;
     }
+
 
     // -------------------------------------
     // USER AUTHENTICATION

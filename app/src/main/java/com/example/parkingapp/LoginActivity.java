@@ -114,6 +114,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnTouchList
                 break;
 
         }
-        return false;
+        return true;
     }
 }
