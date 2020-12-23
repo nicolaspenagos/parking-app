@@ -10,7 +10,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -93,6 +95,34 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.logoutButton:
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog)
+                        .setTitle("Cerrar Sesión")
+                        .setMessage("¿Está seguro que desea cerrar sesión?")
+                        .setNegativeButton("No", (dialog, id)->{
+                            dialog.dismiss();
+                        })
+                        .setPositiveButton("Si", (dialog, id)->{
+
+                            auth.signOut();
+                            goToLogin();
+
+                        });
+
+                builder.show();
+
+                break;
+
+        }
+
+    }
+
     // -------------------------------------
     // USER AUTHENTICATION
     // -------------------------------------
@@ -133,31 +163,4 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()){
-
-            case R.id.logoutButton:
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                        .setTitle("Cerrar Sesión")
-                        .setMessage("¿Está seguro que desea cerrar sesión?")
-                        .setNegativeButton("No", (dialog, id)->{
-                            dialog.dismiss();
-                        })
-                        .setPositiveButton("Si", (dialog, id)->{
-
-                            auth.signOut();
-                            goToLogin();
-
-                        });
-
-                builder.show();
-
-                break;
-
-        }
-
-    }
 }

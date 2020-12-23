@@ -8,8 +8,10 @@ package com.example.parkingapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -23,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 /*
  * This class is responsible for logging in each user that has already been registered in the database by the admin.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnTouchListener {
 
     // -------------------------------------
     // Firebase
@@ -57,51 +59,61 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        loginButton.setOnClickListener(this);
+        loginButton.setOnTouchListener(this);
 
 
     }
 
     @Override
-    public void onClick(View v) {
+    public boolean onTouch(View v, MotionEvent event) {
 
         switch (v.getId()){
+
             case R.id.loginButton:
 
-                String password = passwordEditText.getText().toString().trim();
-                String email = emailEditText.getText().toString().trim();
+                if(event.getAction()==MotionEvent.ACTION_DOWN){
+                    loginButton.setBackgroundResource(R.drawable.pressed_button_background);
+                }else if(event.getAction()==MotionEvent.ACTION_UP){
 
-                if(password != null && !password.equals("") && email != null && !email.equals("")){
+                    loginButton.setBackgroundResource(R.drawable.button_background);
 
-                    errorTextView.setText("");
+                    String password = passwordEditText.getText().toString().trim();
+                    String email = emailEditText.getText().toString().trim();
 
-                    auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
-                            task -> {
-                                if(task.isSuccessful()){
+                    if(password != null && !password.equals("") && email != null && !email.equals("")){
 
-                                    Intent intent = new Intent(this, HomeActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                        errorTextView.setText("");
 
-                                }else{
-                                    Toast.makeText(this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
+                                task -> {
+                                    if(task.isSuccessful()){
+
+                                        Intent intent = new Intent(this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+
+                                    }else{
+                                        Toast.makeText(this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                    }
                                 }
-                            }
-                    );
+                        );
 
-                }else{
-
-                    if(password == null || password.equals("") && email == null || email.equals("")){
-                        errorTextView.setText("El correo y la contraseña están vacíos");
-                    }else if( password == null || password.equals("") ){
-                        errorTextView.setText("La contraseña ésta vacía");
                     }else{
-                        errorTextView.setText("El correo ésta vacío");
-                    }
 
+                        if( (password == null || password.equals("")) && (email == null || email.equals(""))){
+                            errorTextView.setText("El correo y la contraseña están vacíos");
+                        }else if( password == null || password.equals("") ){
+                            errorTextView.setText("La contraseña ésta vacía");
+                        }else{
+                            errorTextView.setText("El correo ésta vacío");
+                        }
+
+                    }
                 }
 
                 break;
+
         }
+        return false;
     }
 }
