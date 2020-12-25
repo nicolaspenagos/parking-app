@@ -207,9 +207,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
                     }
             );
 
-        }else{
-
         }
+        
     }
 
 }
