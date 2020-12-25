@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 /*
  * This class is responsible for logging in each user that has already been registered in the database by the admin.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnTouchListener {
+public class LoginActivity extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener{
 
     // -------------------------------------
     // Firebase
@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnTouchList
     private EditText passwordEditText;
     private Button loginButton;
     private TextView errorTextView;
+    private TextView forgotPasswordTextView;
 
     // -------------------------------------
     // Android methods
@@ -55,11 +56,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnTouchList
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
         errorTextView =  findViewById(R.id.errorTextView);
+        forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView);
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
         loginButton.setOnTouchListener(this);
+        
+        forgotPasswordTextView.setOnClickListener(this);
 
 
     }
@@ -115,5 +119,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnTouchList
 
         }
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.forgotPasswordTextView:
+                break;
+
+        }
+
     }
 }
