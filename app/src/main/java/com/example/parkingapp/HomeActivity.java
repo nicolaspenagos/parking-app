@@ -173,7 +173,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
 
 
     // -------------------------------------
-    // USER AUTHENTICATION
+    // User Authentication
     // -------------------------------------
     private void goToLogin() {
 

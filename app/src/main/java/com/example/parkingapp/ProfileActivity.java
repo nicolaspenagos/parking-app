@@ -99,6 +99,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnTouchLi
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
 
                     changePasswordButton.setBackgroundResource(R.drawable.button_background);
+                    Intent intent =  new Intent(this, ChangePasswordActivity.class);
+                    startActivity(intent);
 
                 }
 
