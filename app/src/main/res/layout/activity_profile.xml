@@ -38,6 +38,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/go_back_arrow" />
+
+        <ImageView
+            android:id="@+id/profileLogoutButton"
+            android:layout_width="22dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/log_out_icon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/gotham_rounded"
-            android:text="Hola, Nicolás"
+            android:text="Hola"
             android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -139,7 +150,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="44dp"
             android:fontFamily="@font/lato_regular"
-            android:text="nicolas.penagosm98@gmail.com"
             app:layout_constraintStart_toEndOf="@+id/imageView6"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -160,7 +170,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/lato_regular"
-            android:text="Nicolas Penagos Montoya"
             app:layout_constraintStart_toEndOf="@+id/imageView6"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
