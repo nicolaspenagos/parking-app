@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnTouchList
     private Button loginButton;
     private TextView errorTextView;
     private TextView forgotPasswordTextView;
+    private TextView recoverPasswordLink;
 
     // -------------------------------------
     // Android methods
@@ -57,14 +58,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnTouchList
         loginButton = findViewById(R.id.loginButton);
         errorTextView =  findViewById(R.id.errorTextView);
         forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView);
+        recoverPasswordLink =  findViewById(R.id.recoverPassworLink);
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
         loginButton.setOnTouchListener(this);
-        
-        forgotPasswordTextView.setOnClickListener(this);
 
+        forgotPasswordTextView.setOnClickListener(this);
+        recoverPasswordLink.setOnClickListener(this);
 
     }
 
@@ -127,9 +129,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnTouchList
         switch (v.getId()){
 
             case R.id.forgotPasswordTextView:
+                goToForgotPasswordActivity();
+                break;
+
+            case R.id.recoverPassworLink:
+                goToForgotPasswordActivity();
                 break;
 
         }
 
     }
+
+    // -------------------------------------
+    // Methods
+    // -------------------------------------
+    public void goToForgotPasswordActivity(){
+
+        Intent intent = new Intent(this, ForgotPasswordActivity.class);
+        startActivity(intent);
+
+    }
+
 }

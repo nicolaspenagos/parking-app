@@ -37,7 +37,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     // -------------------------------------
     private ImageView changePasswordGoBackButton;
     private EditText newPasswordEditText;
-    private EditText reNewPasswrodEditText;
+    private EditText reNewPasswordEditText;
     private Button changePasswordButton;
     private TextView changePasswordErrorTextView;
 
@@ -53,7 +53,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
 
         changePasswordGoBackButton = findViewById(R.id.goBackChangePasswordButton);
         newPasswordEditText = findViewById(R.id.newPasswordEditText);
-        reNewPasswrodEditText = findViewById(R.id.reNewPasswordEditText);
+        reNewPasswordEditText = findViewById(R.id.reNewPasswordEditText);
         changePasswordButton = findViewById(R.id.changePasswordButton);
         changePasswordErrorTextView = findViewById(R.id.changePasswordErrorText);
 
@@ -93,7 +93,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                     changePasswordButton.setBackgroundResource(R.drawable.button_background);
 
                     String password = newPasswordEditText.getText().toString().trim();
-                    String rePassword = reNewPasswrodEditText.getText().toString().trim();
+                    String rePassword = reNewPasswordEditText.getText().toString().trim();
 
                     if(password!=null && !password.equals("") && rePassword!=null && !rePassword.equals("")){
 
