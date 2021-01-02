@@ -151,6 +151,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
 
                     enterVehicleButton.setBackgroundResource(R.drawable.button_background);
+                    Intent intent = new Intent(this, EnterVehicleActivity.class);
+                    startActivity(intent);
 
                 }
 
