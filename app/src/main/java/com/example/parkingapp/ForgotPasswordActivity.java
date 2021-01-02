@@ -14,6 +14,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,6 +36,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     private EditText emailEditText;
     private Button sendButton;
     private ImageView forgottenPasswordGoBackButton;
+    private TextView emailErrorTextView;
 
     // -------------------------------------
     // Android methods
@@ -50,6 +53,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         emailEditText = findViewById(R.id.emailEditText);
         sendButton = findViewById(R.id.sendButton);
         forgottenPasswordGoBackButton = findViewById(R.id.forgottenPasswordgoBackButton);
+        emailErrorTextView = findViewById(R.id.emailErrorTextView);
 
         forgottenPasswordGoBackButton.setOnTouchListener(this);
         sendButton.setOnTouchListener(this);
@@ -77,8 +81,31 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
             case R.id.sendButton:
 
                 if(event.getAction() == MotionEvent.ACTION_DOWN){
-
+                    sendButton.setBackgroundResource(R.drawable.pressed_button_background);
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
+
+                    sendButton.setBackgroundResource(R.drawable.button_background);
+                    String email = emailEditText.getText().toString().trim();
+                    if(email!=null && !email.equals("")){
+
+                        emailErrorTextView.setText("");
+                        auth.sendPasswordResetEmail(email).addOnCompleteListener(
+                                task -> {
+                                    if(task.isSuccessful()){
+
+                                        Toast.makeText(this, "Email de enviado, revise su correo en los próximos minutos para configurar una nueva contraseña.", Toast.LENGTH_LONG).show();
+                                        finish();
+
+                                    }else{
+                                        Toast.makeText(this,  "Error, inténtelo de nuevo más tarde", Toast.LENGTH_LONG).show();
+                                    }
+
+                                }
+                        );
+
+                    }else{
+                        emailErrorTextView.setText("El correo no puede estar vacío.");
+                    }
 
                 }
 
