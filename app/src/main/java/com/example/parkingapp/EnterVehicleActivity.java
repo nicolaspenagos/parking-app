@@ -9,6 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Spanned;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -80,6 +86,8 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
         automovilCheckBox.setOnClickListener(this);
         mulaCheckBox.setOnClickListener(this);
 
+        addOnTextChangedListeners();
+
     }
 
     @Override
@@ -107,6 +115,7 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
 
                    nextButton.setBackgroundResource(R.drawable.button_background);
+                   verifyVehicleData();
                    finish();
 
                 }
@@ -155,6 +164,301 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
 
                 break;
         }
+
+    }
+
+    public void addOnTextChangedListeners(){
+
+        plate1EditText.addTextChangedListener(
+
+                new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String string = s.toString();
+
+                        if(string.length()>1){
+                            string = ""+string.charAt(0);
+                            plate1EditText.setText(string);
+                        }
+
+                        if(!string.equals(string.toUpperCase())){
+                            string = string.toUpperCase();
+                            plate1EditText.setText(string);
+                        }
+
+                        if(string.length()>0){
+                            char character = string.charAt(0);
+                            if(!Character.isLetter(character)){
+                                plate1EditText.getText().clear();
+                            }
+                        }
+                    }
+
+                }
+        );
+
+        plate2EditText.addTextChangedListener(
+
+                new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String string = s.toString();
+
+                        if(string.length()>1){
+                            string = ""+string.charAt(0);
+                            plate2EditText.setText(string);
+                        }
+
+                        if(!string.equals(string.toUpperCase())){
+                            string = string.toUpperCase();
+                            plate2EditText.setText(string);
+                        }
+
+                        if(string.length()>0){
+                            char character = string.charAt(0);
+                            if(!Character.isLetter(character)){
+                                plate2EditText.getText().clear();
+                            }
+                        }
+                    }
+
+                }
+        );
+
+        plate3EditText.addTextChangedListener(
+
+                new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String string = s.toString();
+
+                        if(string.length()>1){
+                            string = ""+string.charAt(0);
+                            plate3EditText.setText(string);
+                        }
+
+                        if(!string.equals(string.toUpperCase())){
+                            string = string.toUpperCase();
+                            plate3EditText.setText(string);
+                        }
+
+                        if(string.length()>0){
+                            char character = string.charAt(0);
+                            if(!Character.isLetter(character)){
+                                plate3EditText.getText().clear();
+                            }
+                        }
+                    }
+
+                }
+        );
+
+        plate3EditText.addTextChangedListener(
+
+                new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String string = s.toString();
+
+                        if(string.length()>1){
+                            string = ""+string.charAt(0);
+                            plate3EditText.setText(string);
+                        }
+
+                        if(!string.equals(string.toUpperCase())){
+                            string = string.toUpperCase();
+                            plate3EditText.setText(string);
+                        }
+
+                        if(string.length()>0){
+                            char character = string.charAt(0);
+                            if(!Character.isLetter(character)){
+                                plate3EditText.getText().clear();
+                            }
+                        }
+                    }
+
+                }
+        );
+
+        plate4EditText.addTextChangedListener(
+
+                new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String string = s.toString();
+
+                        if(string.length()>1){
+                            string = ""+string.charAt(0);
+                            plate4EditText.setText(string);
+                        }
+
+                        if(!string.equals(string.toUpperCase())){
+                            string = string.toUpperCase();
+                            plate4EditText.setText(string);
+                        }
+
+                        if(string.length()>0){
+                            char character = string.charAt(0);
+                            if(!Character.isDigit(character)){
+                                plate4EditText.getText().clear();
+                            }
+                        }
+                    }
+
+                }
+        );
+
+        plate5EditText.addTextChangedListener(
+
+                new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String string = s.toString();
+
+                        if(string.length()>1){
+                            string = ""+string.charAt(0);
+                            plate5EditText.setText(string);
+                        }
+
+                        if(!string.equals(string.toUpperCase())){
+                            string = string.toUpperCase();
+                            plate5EditText.setText(string);
+                        }
+
+                        if(string.length()>0){
+                            char character = string.charAt(0);
+                            if(!Character.isDigit(character)){
+                                plate5EditText.getText().clear();
+                            }
+                        }
+                    }
+
+                }
+        );
+
+        plate6EditText.addTextChangedListener(
+
+                new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String string = s.toString();
+
+                        if(string.length()>1){
+                            string = ""+string.charAt(0);
+                            plate6EditText.setText(string);
+                        }
+
+                        if(!string.equals(string.toUpperCase())){
+                            string = string.toUpperCase();
+                            plate6EditText.setText(string);
+                        }
+
+                        if(string.length()>0){
+                            char character = string.charAt(0);
+                            if(!Character.isDigit(character)){
+                                plate6EditText.getText().clear();
+                            }
+                        }
+                    }
+
+                }
+        );
+
+
+    }
+
+    // -------------------------------------
+    // Methods
+    // -------------------------------------
+    public void verifyVehicleData(){
+
+        String ownerName = ownerNameEditText.getText().toString();
+        String ownerPhone = ownerPhoneEditText.getText().toString();
 
     }
 
