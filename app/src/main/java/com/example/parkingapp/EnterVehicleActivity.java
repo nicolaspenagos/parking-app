@@ -7,16 +7,20 @@ package com.example.parkingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import com.example.parkingapp.model.Vehicle;
 
 /*
  * This class is responsible for enter a vehicle and register its data.
@@ -38,11 +42,12 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
     private CheckBox turboCheckBox;
     private CheckBox automovilCheckBox;
     private CheckBox mulaCheckBox;
+    private Button nextButton;
 
     // -------------------------------------
     // Global assets
     // -------------------------------------
-
+    private char currentType;
 
     // -------------------------------------
     // Android methods
@@ -66,8 +71,10 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
         turboCheckBox = findViewById(R.id.turboCheckBox);
         automovilCheckBox = findViewById(R.id.automovilCheckBox);
         mulaCheckBox = findViewById(R.id.mulaCheckBox);
+        nextButton = findViewById(R.id.nextButton);
 
         enterVehicleGoBackButton.setOnTouchListener(this);
+        nextButton.setOnTouchListener(this);
 
         turboCheckBox.setOnClickListener(this);
         automovilCheckBox.setOnClickListener(this);
@@ -93,12 +100,61 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
 
                 break;
 
+            case R.id.nextButton:
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    nextButton.setBackgroundResource(R.drawable.pressed_button_background);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+
+                   nextButton.setBackgroundResource(R.drawable.button_background);
+                   finish();
+
+                }
+
+                break;
+
         }
         return true;
     }
 
     @Override
     public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.mulaCheckBox:
+
+                if(mulaCheckBox.isChecked()){
+
+                    automovilCheckBox.setChecked(false);
+                    turboCheckBox.setChecked(false);
+                    currentType = Vehicle.MULA;
+                }
+
+                break;
+
+            case R.id.automovilCheckBox:
+
+                if(automovilCheckBox.isChecked()){
+
+                    mulaCheckBox.setChecked(false);
+                    turboCheckBox.setChecked(false);
+                    currentType = Vehicle.AUTOMOVIL;
+                }
+
+                break;
+
+            case R.id.turboCheckBox:
+
+                if(turboCheckBox.isChecked()){
+
+                    mulaCheckBox.setChecked(false);
+                    automovilCheckBox.setChecked(false);
+                    currentType = Vehicle.TURBO;
+                }
+
+                break;
+        }
 
     }
 
