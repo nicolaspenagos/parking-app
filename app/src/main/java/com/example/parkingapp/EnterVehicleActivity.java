@@ -5,6 +5,7 @@
  */
 package com.example.parkingapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.parkingapp.model.Vehicle;
 
@@ -121,18 +123,36 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
                     String ownerName = ownerNameEditText.getText().toString();
                     String ownerPhone = ownerPhoneEditText.getText().toString();
                     String plate1 = plate1EditText.getText().toString();
-                    String plate2 = plate1EditText.getText().toString();
-                    String plate3 = plate1EditText.getText().toString();
-                    String plate4 = plate1EditText.getText().toString();
-                    String plate5 = plate1EditText.getText().toString();
-                    String plate6 = plate1EditText.getText().toString();
+                    String plate2 = plate2EditText.getText().toString();
+                    String plate3 = plate3EditText.getText().toString();
+                    String plate4 = plate4EditText.getText().toString();
+                    String plate5 = plate5EditText.getText().toString();
+                    String plate6 = plate6EditText.getText().toString();
+
+                    char type=' ';
+
+                    if(mulaCheckBox.isChecked()){
+                        type = Vehicle.MULA;
+                    }else if(automovilCheckBox.isChecked()){
+                        type = Vehicle.AUTOMOVIL;
+                    }else if(turboCheckBox.isChecked()){
+                        type = Vehicle.TURBO;
+                    }
 
                     if(verifyVehicleData(ownerName, ownerPhone, plate1, plate2, plate3, plate4, plate5, plate6)){
 
-                    }else{
+                        Intent intent = new Intent(this, EnterVehicleConfirmationActivity.class);
 
+                        intent.putExtra("ownerName", ownerName);
+                        intent.putExtra("ownerPhone", ownerPhone);
+                        intent.putExtra("plate", plate1+plate2+plate3+plate4+plate5+plate6);
+                        intent.putExtra("type", type);
+
+                        startActivityForResult(intent, 1);
+
+                    }else{
+                        Toast.makeText(this, "Todos los campos deben ser diligenciados para continuar.", Toast.LENGTH_LONG).show();
                     }
-                
 
                 }
 
@@ -183,6 +203,19 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1 && resultCode == RESULT_OK){
+
+        }
+
+    }
+
+    // -------------------------------------
+    // Methods
+    // -------------------------------------
     public void addTextCheckers(){
 
         ownerNameEditText.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
@@ -226,6 +259,7 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
                                 plate1EditText.getText().clear();
                             }
                         }
+
                     }
 
                 }
@@ -419,20 +453,10 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
 
     }
 
-    // -------------------------------------
-    // Methods
-    // -------------------------------------
     public boolean verifyVehicleData(String ownerName, String ownerPhone, String plate1, String plate2, String plate3, String plate4, String plate5, String plate6){
 
-       return ownerName!=null && !ownerName.equals("") && ownerPhone!=null && !ownerPhone.equals("") && plate1!=null && !plate1.equals("") && plate2!=null && !plate2.equals("") && plate3!=null && !plate3.equals("") && plate4!=null && !plate4.equals("") && plate5!=null && !plate5.equals("") && plate6!=null && !plate6.equals("");
-
-    }
-
-    public void registerVehicle(){
-
-
-
-
+        boolean checkBoxesOk = !(!mulaCheckBox.isChecked() && !automovilCheckBox.isChecked() && !turboCheckBox.isChecked());
+       return ownerName!=null && !ownerName.equals("") && ownerPhone!=null && !ownerPhone.equals("") && plate1!=null && !plate1.equals("") && plate2!=null && !plate2.equals("") && plate3!=null && !plate3.equals("") && plate4!=null && !plate4.equals("") && plate5!=null && !plate5.equals("") && plate6!=null && !plate6.equals("") && checkBoxesOk;
 
     }
 
