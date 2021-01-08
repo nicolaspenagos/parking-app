@@ -28,6 +28,8 @@ import android.widget.Spinner;
 
 import com.example.parkingapp.model.Vehicle;
 
+import org.w3c.dom.Text;
+
 /*
  * This class is responsible for enter a vehicle and register its data.
  */
@@ -86,7 +88,7 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
         automovilCheckBox.setOnClickListener(this);
         mulaCheckBox.setOnClickListener(this);
 
-        addOnTextChangedListeners();
+        addTextCheckers();
 
     }
 
@@ -115,8 +117,22 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
 
                    nextButton.setBackgroundResource(R.drawable.button_background);
-                   verifyVehicleData();
-                   finish();
+
+                    String ownerName = ownerNameEditText.getText().toString();
+                    String ownerPhone = ownerPhoneEditText.getText().toString();
+                    String plate1 = plate1EditText.getText().toString();
+                    String plate2 = plate1EditText.getText().toString();
+                    String plate3 = plate1EditText.getText().toString();
+                    String plate4 = plate1EditText.getText().toString();
+                    String plate5 = plate1EditText.getText().toString();
+                    String plate6 = plate1EditText.getText().toString();
+
+                    if(verifyVehicleData(ownerName, ownerPhone, plate1, plate2, plate3, plate4, plate5, plate6)){
+
+                    }else{
+
+                    }
+                
 
                 }
 
@@ -167,7 +183,13 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
 
     }
 
-    public void addOnTextChangedListeners(){
+    public void addTextCheckers(){
+
+        ownerNameEditText.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+        ownerPhoneEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        plate4EditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        plate5EditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        plate6EditText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         plate1EditText.addTextChangedListener(
 
@@ -289,46 +311,6 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
                 }
         );
 
-        plate3EditText.addTextChangedListener(
-
-                new TextWatcher() {
-
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                        String string = s.toString();
-
-                        if(string.length()>1){
-                            string = ""+string.charAt(0);
-                            plate3EditText.setText(string);
-                        }
-
-                        if(!string.equals(string.toUpperCase())){
-                            string = string.toUpperCase();
-                            plate3EditText.setText(string);
-                        }
-
-                        if(string.length()>0){
-                            char character = string.charAt(0);
-                            if(!Character.isLetter(character)){
-                                plate3EditText.getText().clear();
-                            }
-                        }
-                    }
-
-                }
-        );
-
         plate4EditText.addTextChangedListener(
 
                 new TextWatcher() {
@@ -350,11 +332,6 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
 
                         if(string.length()>1){
                             string = ""+string.charAt(0);
-                            plate4EditText.setText(string);
-                        }
-
-                        if(!string.equals(string.toUpperCase())){
-                            string = string.toUpperCase();
                             plate4EditText.setText(string);
                         }
 
@@ -393,11 +370,6 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
                             plate5EditText.setText(string);
                         }
 
-                        if(!string.equals(string.toUpperCase())){
-                            string = string.toUpperCase();
-                            plate5EditText.setText(string);
-                        }
-
                         if(string.length()>0){
                             char character = string.charAt(0);
                             if(!Character.isDigit(character)){
@@ -433,11 +405,6 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
                             plate6EditText.setText(string);
                         }
 
-                        if(!string.equals(string.toUpperCase())){
-                            string = string.toUpperCase();
-                            plate6EditText.setText(string);
-                        }
-
                         if(string.length()>0){
                             char character = string.charAt(0);
                             if(!Character.isDigit(character)){
@@ -455,10 +422,17 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
     // -------------------------------------
     // Methods
     // -------------------------------------
-    public void verifyVehicleData(){
+    public boolean verifyVehicleData(String ownerName, String ownerPhone, String plate1, String plate2, String plate3, String plate4, String plate5, String plate6){
 
-        String ownerName = ownerNameEditText.getText().toString();
-        String ownerPhone = ownerPhoneEditText.getText().toString();
+       return ownerName!=null && !ownerName.equals("") && ownerPhone!=null && !ownerPhone.equals("") && plate1!=null && !plate1.equals("") && plate2!=null && !plate2.equals("") && plate3!=null && !plate3.equals("") && plate4!=null && !plate4.equals("") && plate5!=null && !plate5.equals("") && plate6!=null && !plate6.equals("");
+
+    }
+
+    public void registerVehicle(){
+
+
+
+
 
     }
 
