@@ -208,7 +208,7 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == 1 && resultCode == RESULT_OK){
-
+            finish();
         }
 
     }

@@ -24,7 +24,7 @@ public class Vehicle {
     private String id;
     private String ownerName;
     private String ownerPhone;
-    private char type;
+    private String type;
 
     // -------------------------------------
     // Constructors
@@ -33,7 +33,7 @@ public class Vehicle {
 
     }
 
-    public Vehicle(String plate, String id, String ownerName, String ownerPhone, char type){
+    public Vehicle(String plate, String id, String ownerName, String ownerPhone, String type){
 
         this.plate = plate;
         this.id = id;
@@ -78,11 +78,11 @@ public class Vehicle {
         this.ownerPhone = ownerPhone;
     }
 
-    public char getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(char type) {
+    public void setType(String type) {
         this.type = type;
     }
 
