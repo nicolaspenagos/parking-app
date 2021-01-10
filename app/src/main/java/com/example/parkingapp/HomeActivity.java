@@ -116,20 +116,24 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
 
                     logoutButton.setImageResource(R.drawable.go_back_arrow);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog)
-                            .setTitle("Cerrar Sesión")
-                            .setMessage("¿Está seguro que desea cerrar sesión?")
-                            .setNegativeButton("No", (dialog, id)->{
-                                dialog.dismiss();
-                            })
-                            .setPositiveButton("Si", (dialog, id)->{
+                    if(isOnline()){
 
-                                auth.signOut();
-                                goToLogin();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog)
+                                .setTitle("Cerrar Sesión")
+                                .setMessage("¿Está seguro que desea cerrar sesión?")
+                                .setNegativeButton("No", (dialog, id)->{
+                                    dialog.dismiss();
+                                })
+                                .setPositiveButton("Si", (dialog, id)->{
 
-                            });
+                                    auth.signOut();
+                                    goToLogin();
 
-                    builder.show();
+                                });
+
+                        builder.show();
+
+                    }
 
                 }
 
@@ -143,8 +147,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
 
                     profileButton.setImageResource(R.drawable.user);
 
-                    Intent intent = new Intent(this, ProfileActivity.class);
-                    startActivity(intent);
+                    if(isOnline()){
+                        Intent intent = new Intent(this, ProfileActivity.class);
+                        startActivity(intent);
+                    }
 
                 }
 
