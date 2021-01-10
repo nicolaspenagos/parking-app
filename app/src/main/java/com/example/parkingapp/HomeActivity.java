@@ -10,8 +10,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -151,8 +157,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
 
                     enterVehicleButton.setBackgroundResource(R.drawable.button_background);
-                    Intent intent = new Intent(this, EnterVehicleActivity.class);
-                    startActivity(intent);
+
+                    if(isOnline()){
+                        Intent intent = new Intent(this, EnterVehicleActivity.class);
+                        startActivity(intent);
+                    }
 
                 }
 
@@ -208,6 +217,27 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
                         }
                     }
             );
+
+        }
+
+    }
+
+    // -------------------------------------
+    // Connectivity state
+    // -------------------------------------
+    public boolean isOnline(){
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+
+            Intent intent =  new Intent(this, NoInternetActivity.class);
+            startActivity(intent);
+            finish();
+            return false;
 
         }
 

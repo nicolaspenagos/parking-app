@@ -5,6 +5,7 @@
  */
 package com.example.parkingapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -19,8 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.parkingapp.model.Vehicle;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.UUID;
 
@@ -52,6 +56,7 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
     private String currentPhone;
     private String currentPlate;
     private String currentType;
+    private boolean isNew;
 
     // -------------------------------------
     // Android methods
@@ -81,6 +86,8 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
         String plate = extras.getString("plate");
         String plateToShow = "";
         currentPlate = plate;
+
+        isNew = false;
 
         for (int i = 0; i<plate.length(); i++){
 
@@ -127,31 +134,7 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
 
                     confirmationButton.setBackgroundResource(R.drawable.button_background);
-
-                    DatabaseReference ref = database.getReference().child("currentVehicles").child(currentPlate);
-                    Vehicle vehicle = new Vehicle( currentPlate, UUID.randomUUID().toString(),currentName, currentPhone, currentType);
-                    ref.setValue(vehicle).addOnCompleteListener(
-
-                            task -> {
-                                if(task.isSuccessful()){
-
-                                    Toast.makeText(this, "Vehículo ingresado.", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent();
-                                    setResult(RESULT_OK, intent);
-                                    finish();
-
-                                }else{
-
-                                    Toast.makeText(this, "Error, intentelo más tarde.", Toast.LENGTH_LONG).show();
-                                    finish();
-
-                                }
-                            }
-
-                    );
-
-
-
+                    verify();
 
                 }
 
@@ -190,6 +173,69 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
     // -------------------------------------
     // Methods
     // -------------------------------------
+    public void verify(){
 
+        DatabaseReference ref = database.getReference().child("currentVehicles").child(currentPlate);
+
+
+        ref.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        Vehicle vehicle = snapshot.getValue(Vehicle.class);
+                        if (vehicle == null){
+                            isNew = true;
+                        }
+                        enterVehicle();
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                       error();
+                    }
+                }
+        );
+
+    }
+
+    public void enterVehicle(){
+
+        DatabaseReference ref = database.getReference().child("currentVehicles").child(currentPlate);
+
+        if(isNew){
+
+            Vehicle vehicle = new Vehicle( currentPlate, UUID.randomUUID().toString(),currentName, currentPhone, currentType);
+            ref.setValue(vehicle).addOnCompleteListener(
+
+                    task -> {
+                        if(task.isSuccessful()){
+
+                            Toast.makeText(this, "Vehículo ingresado.", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent();
+                            setResult(RESULT_OK, intent);
+                            finish();
+
+                        }else{
+
+                            Toast.makeText(this, "Error, intentelo más tarde.", Toast.LENGTH_LONG).show();
+                            finish();
+
+                        }
+                    }
+
+            );
+
+        }else{
+            Toast.makeText(this, "Este vehículo ya está ingresado.", Toast.LENGTH_LONG).show();
+        }
+
+
+    }
+
+    public void error(){
+        Toast.makeText(this, "Error, intentelo más tarde.", Toast.LENGTH_LONG).show();
+    }
 
 }
