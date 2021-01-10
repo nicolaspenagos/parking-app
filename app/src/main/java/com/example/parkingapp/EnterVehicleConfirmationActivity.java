@@ -1,7 +1,7 @@
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * @author Nicolás Penagos Montoya
  * nicolas.penagosm98@gmail.com
- **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 package com.example.parkingapp;
 
@@ -206,7 +206,7 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
 
         if(isNew){
 
-            Vehicle vehicle = new Vehicle( currentPlate, UUID.randomUUID().toString(),currentName, currentPhone, currentType);
+            Vehicle vehicle = new Vehicle( currentPlate, UUID.randomUUID().toString(),currentName, currentPhone, currentType, getIntent().getExtras().getString("userName"), getIntent().getExtras().getString("userId"));
             ref.setValue(vehicle).addOnCompleteListener(
 
                     task -> {

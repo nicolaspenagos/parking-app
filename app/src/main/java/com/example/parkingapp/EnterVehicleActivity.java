@@ -1,14 +1,17 @@
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * @author Nicolás Penagos Montoya
  * nicolas.penagosm98@gmail.com
- **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 package com.example.parkingapp;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -29,6 +32,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.parkingapp.model.Vehicle;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.w3c.dom.Text;
 
@@ -36,6 +40,11 @@ import org.w3c.dom.Text;
  * This class is responsible for enter a vehicle and register its data.
  */
 public class EnterVehicleActivity extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener {
+
+    // -------------------------------------
+    // Firebase
+    // -------------------------------------
+    private FirebaseAuth auth;
 
     // -------------------------------------
     // XML references
@@ -68,6 +77,8 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_enter_vehicle);
+
+        auth = FirebaseAuth.getInstance();
 
         enterVehicleGoBackButton = findViewById(R.id.enterVehicleGoBackButton);
         ownerNameEditText = findViewById(R.id.ownerNameEditText);
@@ -106,7 +117,9 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
 
                     enterVehicleGoBackButton.setImageResource(R.drawable.go_back_arrow);
-                    finish();
+                    if(isOnline()){
+                        finish();
+                    }
 
                 }
 
@@ -120,39 +133,45 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
 
                    nextButton.setBackgroundResource(R.drawable.button_background);
 
-                    String ownerName = ownerNameEditText.getText().toString();
-                    String ownerPhone = ownerPhoneEditText.getText().toString();
-                    String plate1 = plate1EditText.getText().toString();
-                    String plate2 = plate2EditText.getText().toString();
-                    String plate3 = plate3EditText.getText().toString();
-                    String plate4 = plate4EditText.getText().toString();
-                    String plate5 = plate5EditText.getText().toString();
-                    String plate6 = plate6EditText.getText().toString();
+                   if(isOnline()){
 
-                    char type=' ';
+                       String ownerName = ownerNameEditText.getText().toString();
+                       String ownerPhone = ownerPhoneEditText.getText().toString();
+                       String plate1 = plate1EditText.getText().toString();
+                       String plate2 = plate2EditText.getText().toString();
+                       String plate3 = plate3EditText.getText().toString();
+                       String plate4 = plate4EditText.getText().toString();
+                       String plate5 = plate5EditText.getText().toString();
+                       String plate6 = plate6EditText.getText().toString();
 
-                    if(mulaCheckBox.isChecked()){
-                        type = Vehicle.MULA;
-                    }else if(automovilCheckBox.isChecked()){
-                        type = Vehicle.AUTOMOVIL;
-                    }else if(turboCheckBox.isChecked()){
-                        type = Vehicle.TURBO;
-                    }
+                       char type=' ';
 
-                    if(verifyVehicleData(ownerName, ownerPhone, plate1, plate2, plate3, plate4, plate5, plate6)){
+                       if(mulaCheckBox.isChecked()){
+                           type = Vehicle.MULA;
+                       }else if(automovilCheckBox.isChecked()){
+                           type = Vehicle.AUTOMOVIL;
+                       }else if(turboCheckBox.isChecked()){
+                           type = Vehicle.TURBO;
+                       }
 
-                        Intent intent = new Intent(this, EnterVehicleConfirmationActivity.class);
+                       if(verifyVehicleData(ownerName, ownerPhone, plate1, plate2, plate3, plate4, plate5, plate6)){
 
-                        intent.putExtra("ownerName", ownerName);
-                        intent.putExtra("ownerPhone", ownerPhone);
-                        intent.putExtra("plate", plate1+plate2+plate3+plate4+plate5+plate6);
-                        intent.putExtra("type", type);
+                           Intent intent = new Intent(this, EnterVehicleConfirmationActivity.class);
 
-                        startActivityForResult(intent, 1);
+                           intent.putExtra("ownerName", ownerName);
+                           intent.putExtra("ownerPhone", ownerPhone);
+                           intent.putExtra("plate", plate1+plate2+plate3+plate4+plate5+plate6);
+                           intent.putExtra("type", type);
+                           intent.putExtra("userId", getIntent().getExtras().getString("userId"));
+                           intent.putExtra("userName", getIntent().getExtras().getString("userName"));
 
-                    }else{
-                        Toast.makeText(this, "Todos los campos deben ser diligenciados para continuar.", Toast.LENGTH_LONG).show();
-                    }
+                           startActivityForResult(intent, 1);
+
+                       }else{
+                           Toast.makeText(this, "Todos los campos deben ser diligenciados para continuar.", Toast.LENGTH_LONG).show();
+                       }
+
+                   }
 
                 }
 
@@ -457,6 +476,27 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
 
         boolean checkBoxesOk = !(!mulaCheckBox.isChecked() && !automovilCheckBox.isChecked() && !turboCheckBox.isChecked());
        return ownerName!=null && !ownerName.equals("") && ownerPhone!=null && !ownerPhone.equals("") && plate1!=null && !plate1.equals("") && plate2!=null && !plate2.equals("") && plate3!=null && !plate3.equals("") && plate4!=null && !plate4.equals("") && plate5!=null && !plate5.equals("") && plate6!=null && !plate6.equals("") && checkBoxesOk;
+
+    }
+
+    // -------------------------------------
+    // Connectivity state
+    // -------------------------------------
+    public boolean isOnline(){
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+
+            Intent intent =  new Intent(this, NoInternetActivity.class);
+            startActivity(intent);
+            finish();
+            return false;
+
+        }
 
     }
 

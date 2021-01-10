@@ -1,14 +1,17 @@
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * @author Nicolás Penagos Montoya
  * nicolas.penagosm98@gmail.com
- **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 package com.example.parkingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -83,38 +86,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnTouchList
 
                     loginButton.setBackgroundResource(R.drawable.button_background);
 
-                    String password = passwordEditText.getText().toString().trim();
-                    String email = emailEditText.getText().toString().trim();
+                    if(isOnline()){
 
-                    if(password != null && !password.equals("") && email != null && !email.equals("")){
+                        String password = passwordEditText.getText().toString().trim();
+                        String email = emailEditText.getText().toString().trim();
 
-                        errorTextView.setText("");
+                        if(password != null && !password.equals("") && email != null && !email.equals("")){
 
-                        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
-                                task -> {
-                                    if(task.isSuccessful()){
+                            errorTextView.setText("");
 
-                                        Intent intent = new Intent(this, HomeActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
+                                    task -> {
+                                        if(task.isSuccessful()){
 
-                                    }else{
-                                        Toast.makeText(this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                            Intent intent = new Intent(this, HomeActivity.class);
+                                            startActivity(intent);
+                                            finish();
+
+                                        }else{
+                                            Toast.makeText(this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                        }
                                     }
-                                }
-                        );
+                            );
 
-                    }else{
-
-                        if( (password == null || password.equals("")) && (email == null || email.equals(""))){
-                            errorTextView.setText("El correo y la contraseña están vacíos");
-                        }else if( password == null || password.equals("") ){
-                            errorTextView.setText("La contraseña ésta vacía");
                         }else{
-                            errorTextView.setText("El correo ésta vacío");
-                        }
 
+                            if( (password == null || password.equals("")) && (email == null || email.equals(""))){
+                                errorTextView.setText("El correo y la contraseña están vacíos");
+                            }else if( password == null || password.equals("") ){
+                                errorTextView.setText("La contraseña ésta vacía");
+                            }else{
+                                errorTextView.setText("El correo ésta vacío");
+                            }
+
+                        }
                     }
+
                 }
 
                 break;
@@ -145,8 +152,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnTouchList
     // -------------------------------------
     public void goToForgotPasswordActivity(){
 
-        Intent intent = new Intent(this, ForgotPasswordActivity.class);
-        startActivity(intent);
+        if(isOnline()){
+
+            Intent intent = new Intent(this, ForgotPasswordActivity.class);
+            startActivity(intent);
+
+        }
+
+    }
+
+    // -------------------------------------
+    // Connectivity state
+    // -------------------------------------
+    public boolean isOnline(){
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+
+            Intent intent =  new Intent(this, NoInternetActivity.class);
+            startActivity(intent);
+            finish();
+            return false;
+
+        }
 
     }
 

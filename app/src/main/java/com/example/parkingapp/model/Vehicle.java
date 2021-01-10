@@ -25,6 +25,10 @@ public class Vehicle {
     private String ownerName;
     private String ownerPhone;
     private String type;
+    private String responsableAtEnter;
+    private String responsableAtEnterId;
+    private String responsableAtExit;
+    private String responsableAtExitId;
 
     // -------------------------------------
     // Constructors
@@ -33,13 +37,17 @@ public class Vehicle {
 
     }
 
-    public Vehicle(String plate, String id, String ownerName, String ownerPhone, String type){
+    public Vehicle(String plate, String id, String ownerName, String ownerPhone, String type, String responsableAtEnter, String responsableAtEnterId){
 
         this.plate = plate;
         this.id = id;
         this.ownerName = ownerName;
         this.ownerPhone = ownerPhone;
         this.type = type;
+        this.responsableAtEnter = responsableAtEnter;
+        this.responsableAtEnterId = responsableAtEnterId;
+        this.responsableAtExit = "";
+        this.responsableAtExitId = "";
 
     }
 
@@ -85,5 +93,21 @@ public class Vehicle {
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getResponsableAtEnter() { return responsableAtEnter; }
+
+    public void setResponsableAtEnter(String responsableAtEnter) { this.responsableAtEnter = responsableAtEnter; }
+
+    public String getResponsableAtEnterId() { return responsableAtEnterId; }
+
+    public void setResponsableAtEnterId(String responsableAtEnterId) { this.responsableAtEnterId = responsableAtEnterId; }
+
+    public String getResponsableAtExit() { return responsableAtExit; }
+
+    public void setResponsableAtExit(String responsableAtExit) { this.responsableAtExit = responsableAtExit; }
+
+    public String getResponsableAtExitId() { return responsableAtExitId; }
+
+    public void setResponsableAtExitId(String responsableAtExitId) { this.responsableAtExitId = responsableAtExitId; }
 
 }

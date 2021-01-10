@@ -1,3 +1,8 @@
+/* * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * @author Nicolás Penagos Montoya
+ * nicolas.penagosm98@gmail.com
+ * * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
 package com.example.parkingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +16,9 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Window;
 
+/*
+ * This class will let the user know that there is no internet connection.
+ */
 public class NoInternetActivity extends AppCompatActivity {
 
     // -------------------------------------

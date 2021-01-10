@@ -1,13 +1,16 @@
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * @author Nicolás Penagos Montoya
  * nicolas.penagosm98@gmail.com
- **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 package com.example.parkingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -77,7 +80,9 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
 
                     changePasswordGoBackButton.setImageResource(R.drawable.go_back_arrow);
-                    finish();
+
+                    if(isOnline())
+                     finish();
 
 
                 }
@@ -92,41 +97,45 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
 
                     changePasswordButton.setBackgroundResource(R.drawable.button_background);
 
-                    String password = newPasswordEditText.getText().toString().trim();
-                    String rePassword = reNewPasswordEditText.getText().toString().trim();
+                    if(isOnline()){
 
-                    if(password!=null && !password.equals("") && rePassword!=null && !rePassword.equals("")){
+                        String password = newPasswordEditText.getText().toString().trim();
+                        String rePassword = reNewPasswordEditText.getText().toString().trim();
 
-                        changePasswordErrorTextView.setText("");
-                        if (password.equals(rePassword)) {
+                        if(password!=null && !password.equals("") && rePassword!=null && !rePassword.equals("")){
 
-                            user.updatePassword(password).addOnCompleteListener(
-                                    task -> {
+                            changePasswordErrorTextView.setText("");
+                            if (password.equals(rePassword)) {
 
-                                        if(task.isSuccessful()){
+                                user.updatePassword(password).addOnCompleteListener(
+                                        task -> {
 
-                                            Toast.makeText(this, "Contraseña cambiada exitosamente.", Toast.LENGTH_LONG).show();
-                                            user.reload().addOnCompleteListener(
-                                                    reloadTask ->{
-                                                        finish();
-                                                    }
-                                            );
+                                            if(task.isSuccessful()){
 
-                                        }else{
-                                            Toast.makeText(this, "Error, inicie sesión nuevamente y vuelva a intentarlo.", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(this, "Contraseña cambiada exitosamente.", Toast.LENGTH_LONG).show();
+                                                user.reload().addOnCompleteListener(
+                                                        reloadTask ->{
+                                                            finish();
+                                                        }
+                                                );
+
+                                            }else{
+                                                Toast.makeText(this, "Error, inicie sesión nuevamente y vuelva a intentarlo.", Toast.LENGTH_LONG).show();
+                                            }
+
                                         }
+                                );
 
-                                    }
-                            );
+                            }else{
+                                changePasswordErrorTextView.setText("Las contraseñas no son iguales");
+                            }
 
                         }else{
-                            changePasswordErrorTextView.setText("Las contraseñas no son iguales");
+                            changePasswordErrorTextView.setText("No pueden haber campos vacíos");
                         }
 
-                    }else{
-                        changePasswordErrorTextView.setText("No pueden haber campos vacíos");
-                    }
 
+                    }
 
                 }
 
@@ -135,6 +144,27 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         }
 
         return true;
+
+    }
+
+    // -------------------------------------
+    // Connectivity state
+    // -------------------------------------
+    public boolean isOnline(){
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+
+            Intent intent =  new Intent(this, NoInternetActivity.class);
+            startActivity(intent);
+            finish();
+            return false;
+
+        }
 
     }
 

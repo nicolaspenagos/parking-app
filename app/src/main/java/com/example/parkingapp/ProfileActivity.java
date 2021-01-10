@@ -1,9 +1,7 @@
-/**
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- *
+/* * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * @author Nicolás Penagos Montoya
  * nicolas.penagosm98@gmail.com
- * *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 package com.example.parkingapp;
 
@@ -12,7 +10,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -98,9 +99,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnTouchLi
                     changePasswordButton.setBackgroundResource(R.drawable.pressed_button_background);
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
 
-                    changePasswordButton.setBackgroundResource(R.drawable.button_background);
-                    Intent intent =  new Intent(this, ChangePasswordActivity.class);
-                    startActivity(intent);
+                    if(isOnline()){
+
+                        changePasswordButton.setBackgroundResource(R.drawable.button_background);
+                        Intent intent =  new Intent(this, ChangePasswordActivity.class);
+                        startActivity(intent);
+
+                    }
 
                 }
 
@@ -113,9 +118,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnTouchLi
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
 
                     goBackButton.setImageResource(R.drawable.go_back_arrow);
-                    Intent intent =  new Intent(this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
+
+                    if(isOnline()){
+
+                        Intent intent =  new Intent(this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+
+                    }
 
                 }
 
@@ -129,20 +139,24 @@ public class ProfileActivity extends AppCompatActivity implements View.OnTouchLi
 
                     profileLogoutButton.setImageResource(R.drawable.log_out_icon);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog)
-                            .setTitle("Cerrar Sesión")
-                            .setMessage("¿Está seguro que desea cerrar sesión?")
-                            .setNegativeButton("No", (dialog, id)->{
-                                dialog.dismiss();
-                            })
-                            .setPositiveButton("Si", (dialog, id)->{
+                    if(isOnline()){
 
-                                auth.signOut();
-                                goToLogin();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog)
+                                .setTitle("Cerrar Sesión")
+                                .setMessage("¿Está seguro que desea cerrar sesión?")
+                                .setNegativeButton("No", (dialog, id)->{
+                                    dialog.dismiss();
+                                })
+                                .setPositiveButton("Si", (dialog, id)->{
 
-                            });
+                                    auth.signOut();
+                                    goToLogin();
 
-                    builder.show();
+                                });
+
+                        builder.show();
+
+                    }
 
                 }
 
@@ -203,6 +217,27 @@ public class ProfileActivity extends AppCompatActivity implements View.OnTouchLi
         usernameTextView.setText("Hola, "+name);
         wholeNameTextView.setText(wholeName);
         emailTextView.setText(email);
+
+    }
+
+    // -------------------------------------
+    // Connectivity state
+    // -------------------------------------
+    public boolean isOnline(){
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+
+            Intent intent =  new Intent(this, NoInternetActivity.class);
+            startActivity(intent);
+            finish();
+            return false;
+
+        }
 
     }
 

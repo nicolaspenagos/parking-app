@@ -1,7 +1,7 @@
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * @author Nicolás Penagos Montoya
  * nicolas.penagosm98@gmail.com
- **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 package com.example.parkingapp;
 
@@ -165,8 +165,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
                     enterVehicleButton.setBackgroundResource(R.drawable.button_background);
 
                     if(isOnline()){
+
                         Intent intent = new Intent(this, EnterVehicleActivity.class);
+                        intent.putExtra("userId", currentUser.getEmail());
+                        intent.putExtra("userName", currentUser.getName());
                         startActivity(intent);
+
                     }
 
                 }
