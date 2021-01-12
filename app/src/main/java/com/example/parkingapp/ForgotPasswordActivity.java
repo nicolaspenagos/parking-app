@@ -7,6 +7,10 @@ package com.example.parkingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -85,34 +89,59 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
 
                     sendButton.setBackgroundResource(R.drawable.button_background);
-                    String email = emailEditText.getText().toString().trim();
-                    if(email!=null && !email.equals("")){
 
-                        emailErrorTextView.setText("");
-                        auth.sendPasswordResetEmail(email).addOnCompleteListener(
-                                task -> {
-                                    if(task.isSuccessful()){
+                    if(isOnline()){
 
-                                        Toast.makeText(this, "Email de enviado, revise su correo en los próximos minutos para configurar una nueva contraseña.", Toast.LENGTH_LONG).show();
-                                        finish();
+                        String email = emailEditText.getText().toString().trim();
+                        if(email!=null && !email.equals("")){
 
-                                    }else{
-                                        Toast.makeText(this,  "Error, inténtelo de nuevo más tarde", Toast.LENGTH_LONG).show();
+                            emailErrorTextView.setText("");
+                            auth.sendPasswordResetEmail(email).addOnCompleteListener(
+                                    task -> {
+                                        if(task.isSuccessful()){
+
+                                            Toast.makeText(this, "Email de enviado, revise su correo en los próximos minutos para configurar una nueva contraseña.", Toast.LENGTH_LONG).show();
+                                            finish();
+
+                                        }else{
+                                            Toast.makeText(this,  "Error, inténtelo de nuevo más tarde", Toast.LENGTH_LONG).show();
+                                        }
+
                                     }
+                            );
 
-                                }
-                        );
-
-                    }else{
-                        emailErrorTextView.setText("El correo no puede estar vacío.");
+                        }else{
+                            emailErrorTextView.setText("El correo no puede estar vacío.");
+                        }
                     }
 
                 }
 
                 break;
-
         }
 
         return true;
     }
+
+    // -------------------------------------
+    // Connectivity state
+    // -------------------------------------
+    public boolean isOnline(){
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+
+            Intent intent =  new Intent(this, NoInternetActivity.class);
+            startActivity(intent);
+            finish();
+            return false;
+
+        }
+
+    }
+
 }

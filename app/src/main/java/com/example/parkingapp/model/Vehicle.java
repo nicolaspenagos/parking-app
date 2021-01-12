@@ -5,6 +5,8 @@
  */
 package com.example.parkingapp.model;
 
+import androidx.annotation.NonNull;
+
 /*
  * This class will represents each vehicle registered in the app.
  */
@@ -49,6 +51,15 @@ public class Vehicle {
         this.responsableAtExit = "";
         this.responsableAtExitId = "";
 
+    }
+
+    // -------------------------------------
+    // Methods
+    // -------------------------------------
+    @NonNull
+    @Override
+    public String toString() {
+        return plate;
     }
 
     // -------------------------------------

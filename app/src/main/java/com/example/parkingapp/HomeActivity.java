@@ -10,26 +10,26 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.parkingapp.model.User;
+import com.example.parkingapp.model.Vehicle;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -58,11 +58,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
     private EditText plate4EditText;
     private EditText plate5EditText;
     private EditText plate6EditText;
+    private GridView vehiclesGridView;
 
     // -------------------------------------
     // Global assets
     // -------------------------------------
     private User currentUser;
+    private VehicleAdapter adapter;
+
 
     // -------------------------------------
     // Android methods
@@ -92,13 +95,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
             plate4EditText = findViewById(R.id.plate4EditText);
             plate5EditText = findViewById(R.id.plate5EditText);
             plate6EditText = findViewById(R.id.plate6EditText);
+            vehiclesGridView = findViewById(R.id.vehiclesGridView);
 
             logoutButton.setOnTouchListener(this);
             profileButton.setOnTouchListener(this);
             enterVehicleButton.setOnTouchListener(this);
             searchButton.setOnTouchListener(this);
 
+            adapter = new VehicleAdapter();
+            vehiclesGridView.setAdapter(adapter);
+
             recoverUser();
+            loadDatabase();
         }
 
     }
@@ -251,6 +259,40 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
 
         }
 
+    }
+
+    // -------------------------------------
+    // Methods
+    // -------------------------------------
+    private void loadDatabase() {
+
+        DatabaseReference ref = database.getReference().child("currentVehicles");
+
+        ref.addValueEventListener(
+
+                new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot data) {
+
+                        adapter.clear();
+                        for(DataSnapshot child: data.getChildren()){
+
+                            Vehicle vehicle = child.getValue(Vehicle.class);
+                            adapter.addVehicle(vehicle);
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+
+                }
+        );
     }
 
 }
