@@ -78,10 +78,13 @@ public class VehicleAdapter extends BaseAdapter {
         String plateToShow = "";
         for(int i=0; i<vehicle.getPlate().length(); i++){
 
-            if(i==3){
+            if(i!=3){
                 plateToShow += vehicle.getPlate().charAt(i);
             }else{
+
                 plateToShow += "-";
+                plateToShow += vehicle.getPlate().charAt(i);
+
             }
 
         }
