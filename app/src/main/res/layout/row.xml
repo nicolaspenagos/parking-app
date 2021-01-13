@@ -6,6 +6,7 @@
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardRowLayout"
         android:layout_width="115dp"
         android:layout_height="93dp"
         android:layout_marginStart="8dp"

@@ -5,11 +5,17 @@
  */
 package com.example.parkingapp;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.parkingapp.model.Vehicle;
 
@@ -72,6 +78,7 @@ public class VehicleAdapter extends BaseAdapter {
 
         TextView plateTextView = rowView.findViewById(R.id.plateRowTextView);
         TextView typeTextView = rowView.findViewById(R.id.typeRowTextView);
+        ConstraintLayout cardLayout = rowView.findViewById(R.id.cardRowLayout);
 
         Vehicle vehicle = vehicles.get(position);
 
@@ -89,11 +96,33 @@ public class VehicleAdapter extends BaseAdapter {
 
         }
 
+        if(vehicle.getType().equals("AUTOMÓVIL")){
+            cardLayout.setBackgroundResource(R.drawable.row_background3);
+        }else if(vehicle.getType().equals("MULA")){
+            cardLayout.setBackgroundResource(R.drawable.row_background2);
+        }else if(vehicle.getType().equals("TURBO")){
+            cardLayout.setBackgroundResource(R.drawable.row_background1);
+        }
+
         plateTextView.setText(plateToShow);
         typeTextView.setText(vehicle.getType());
+
+        View.OnClickListener listener = (v)->{
+
+            Intent intent = new Intent(list.getContext(), VehicleActivity.class);
+            intent.putExtra("id", vehicle.getPlate());
+            list.getContext().startActivity(intent);
+
+        };
+
+        cardLayout.setOnClickListener(listener);
+        plateTextView.setOnClickListener(listener);
+        typeTextView.setOnClickListener(listener);
 
         return rowView;
 
     }
+
+
 
 }

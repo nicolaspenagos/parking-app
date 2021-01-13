@@ -77,6 +77,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home);
 
+        isOnline();
+
         auth =  FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
