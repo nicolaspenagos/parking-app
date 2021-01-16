@@ -1,3 +1,8 @@
+/* * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * @author Nicolás Penagos Montoya
+ * nicolas.penagosm98@gmail.com
+ * * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
 package com.example.parkingapp;
 
 import androidx.annotation.NonNull;
@@ -16,11 +21,30 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/*
+ * This class will show the vehicle information.
+ */
 public class VehicleActivity extends AppCompatActivity {
 
+    // -------------------------------------
+    // XML references
+    // -------------------------------------
+    private TextView ownerTextView;
+    private TextView ownerPhoneTextView;
+    private TextView plateTextView;
+    private TextView typeTextView;
+    private TextView responsableAtEnterTextView;
+    private TextView timeTextView;
+
+    // -------------------------------------
+    // Global assets
+    // -------------------------------------
     private String id;
     private Vehicle currentVehicle;
-    private TextView tx;
+
+    // -------------------------------------
+    // Android methods
+    // -------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -29,7 +53,7 @@ public class VehicleActivity extends AppCompatActivity {
 
         isOnline();
 
-        tx = findViewById(R.id.textView15);
+
         id = getIntent().getExtras().getString("id");
         loadData();
 
@@ -43,7 +67,7 @@ public class VehicleActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         currentVehicle = snapshot.getValue(Vehicle.class);
-                        tx.setText(currentVehicle.getPlate());
+
                     }
 
                     @Override

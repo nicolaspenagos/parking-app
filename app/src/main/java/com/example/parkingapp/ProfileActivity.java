@@ -29,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /*
- * This class will show the user information and will allow to change the password
+ * This class will show the user information and will allow to change the password.
  */
 public class ProfileActivity extends AppCompatActivity implements View.OnTouchListener {
 
