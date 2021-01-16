@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.example.parkingapp.model.Vehicle;
@@ -49,6 +50,7 @@ public class VehicleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_vehicle);
 
         isOnline();
