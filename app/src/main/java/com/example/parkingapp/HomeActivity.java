@@ -266,7 +266,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
     // -------------------------------------
     // Methods
     // -------------------------------------
-    private void loadDatabase() {
+    public void loadDatabase() {
 
         DatabaseReference ref = database.getReference().child("currentVehicles");
 

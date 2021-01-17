@@ -206,7 +206,7 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
 
         if(isNew){
 
-            Vehicle vehicle = new Vehicle( currentPlate, UUID.randomUUID().toString(),currentName, currentPhone, currentType, getIntent().getExtras().getString("userName"), getIntent().getExtras().getString("userId"));
+            Vehicle vehicle = new Vehicle( currentPlate, UUID.randomUUID().toString(),currentName, currentPhone, currentType, getIntent().getExtras().getString("userName"), getIntent().getExtras().getString("userId"), System.currentTimeMillis());
             ref.setValue(vehicle).addOnCompleteListener(
 
                     task -> {

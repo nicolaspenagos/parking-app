@@ -1,7 +1,7 @@
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * @author Nicolás Penagos Montoya
  * nicolas.penagosm98@gmail.com
- **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 package com.example.parkingapp.model;
 
@@ -31,6 +31,7 @@ public class Vehicle {
     private String responsableAtEnterId;
     private String responsableAtExit;
     private String responsableAtExitId;
+    private long enterTime;
 
     // -------------------------------------
     // Constructors
@@ -39,7 +40,7 @@ public class Vehicle {
 
     }
 
-    public Vehicle(String plate, String id, String ownerName, String ownerPhone, String type, String responsableAtEnter, String responsableAtEnterId){
+    public Vehicle(String plate, String id, String ownerName, String ownerPhone, String type, String responsableAtEnter, String responsableAtEnterId, Long enterTime){
 
         this.plate = plate;
         this.id = id;
@@ -50,6 +51,7 @@ public class Vehicle {
         this.responsableAtEnterId = responsableAtEnterId;
         this.responsableAtExit = "";
         this.responsableAtExitId = "";
+        this.enterTime = enterTime;
 
     }
 
@@ -121,4 +123,7 @@ public class Vehicle {
 
     public void setResponsableAtExitId(String responsableAtExitId) { this.responsableAtExitId = responsableAtExitId; }
 
+    public long getEnterTime() { return enterTime; }
+
+    public void setEnterTime(long enterTime) { this.enterTime = enterTime; }
 }
