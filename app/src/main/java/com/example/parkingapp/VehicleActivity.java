@@ -135,6 +135,9 @@ public class VehicleActivity extends AppCompatActivity implements View.OnTouchLi
 
                     removeVehicleButton.setBackgroundResource(R.drawable.button_background);
 
+                    Intent intent = new Intent(this, RemoveVehicleActivity.class);
+                    startActivity(intent);
+                    finish();
 
                 }
 
