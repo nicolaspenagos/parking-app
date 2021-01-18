@@ -109,6 +109,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
 
             recoverUser();
             loadDatabase();
+
         }
 
     }

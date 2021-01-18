@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/removeVehicleGoBackImageView"
             android:layout_width="22dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -53,8 +53,8 @@
 
         <ImageView
             android:id="@+id/imageView15"
-            android:layout_height="70dp"
             android:layout_width="match_parent"
+            android:layout_height="70dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -102,6 +102,7 @@
                 android:id="@+id/imageView17"
                 android:layout_width="138dp"
                 android:layout_height="64dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -125,7 +126,7 @@
                 android:textColor="#000000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView45" />
+                app:layout_constraintTop_toBottomOf="@+id/removeVehicleTicketIdTextView" />
 
             <TextView
                 android:id="@+id/textView56"
@@ -135,7 +136,7 @@
                 android:textColor="#000000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView54" />
+                app:layout_constraintTop_toBottomOf="@+id/removeVehicleResponsableExitTextView" />
 
             <TextView
                 android:id="@+id/textView43"
@@ -145,12 +146,13 @@
                 android:text="RECIBO DE PARQUEO ELECTRÓNICO"
                 android:textColor="#000000"
                 android:textSize="11sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
             <TextView
-                android:id="@+id/textView45"
+                android:id="@+id/removeVehicleTicketIdTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cargando..."
@@ -161,10 +163,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView43" />
 
             <TextView
-                android:id="@+id/textView48"
+                android:id="@+id/removeVehicleCurrentDateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fecha/Hora"
+                android:text="Cargando"
                 android:textColor="#000000"
                 android:textSize="11sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -172,95 +174,95 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView47" />
 
             <TextView
-                android:id="@+id/textView49"
+                android:id="@+id/removeVehicleOwnerTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
-                android:text="Cliente: NICOLAS PENAGOS"
+                android:text="CARGANDO..."
                 android:textColor="#000000"
                 android:textSize="11sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView48" />
+                app:layout_constraintStart_toEndOf="@+id/tx1"
+                app:layout_constraintTop_toBottomOf="@+id/removeVehicleCurrentDateTextView" />
 
             <TextView
-                android:id="@+id/textView50"
+                android:id="@+id/removeVehicleOwnerPhoneTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="2dp"
-                android:text="Celular: 3166017115"
+                android:text="CARGANDO..."
                 android:textColor="#000000"
                 android:textSize="11sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView49" />
+                app:layout_constraintStart_toEndOf="@+id/tx2"
+                app:layout_constraintTop_toBottomOf="@+id/removeVehicleOwnerTextView" />
 
             <TextView
-                android:id="@+id/textView51"
+                android:id="@+id/removeVehiclePlateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
-                android:text="Placas: RDK-889"
+                android:text="CARGANDO..."
                 android:textColor="#000000"
                 android:textSize="11sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView50" />
+                app:layout_constraintStart_toEndOf="@+id/tx3"
+                app:layout_constraintTop_toBottomOf="@+id/removeVehicleOwnerPhoneTextView" />
 
             <TextView
-                android:id="@+id/textView52"
+                android:id="@+id/removeVehicleTypeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="2dp"
-                android:text="Tipo: AUTOMÓVIL"
+                android:text="CARGANDO..."
                 android:textColor="#000000"
                 android:textSize="11sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView51" />
+                app:layout_constraintStart_toEndOf="@+id/tx4"
+                app:layout_constraintTop_toBottomOf="@+id/removeVehiclePlateTextView" />
 
             <TextView
-                android:id="@+id/textView55"
+                android:id="@+id/removeVehicleEnterDateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="2dp"
-                android:text="Fecha/Hora Entrada:"
+                android:text="CARGANDO..."
                 android:textColor="#000000"
                 android:textSize="11sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView52" />
+                app:layout_constraintStart_toEndOf="@+id/tx5"
+                app:layout_constraintTop_toBottomOf="@+id/removeVehicleTypeTextView" />
 
             <TextView
-                android:id="@+id/textView53"
+                android:id="@+id/removeVehicleResponsablEnterTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
-                android:text="Entrada: YEIMI OSSA"
+                android:text="CARGANDO..."
                 android:textColor="#000000"
                 android:textSize="11sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView55" />
+                app:layout_constraintStart_toEndOf="@+id/tx6"
+                app:layout_constraintTop_toBottomOf="@+id/removeVehicleEnterDateTextView" />
 
             <TextView
-                android:id="@+id/textView54"
+                android:id="@+id/removeVehicleResponsableExitTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="2dp"
-                android:text="Salida: CARLOS PENAGOS"
+                android:text="CARGANDO..."
                 android:textColor="#000000"
                 android:textSize="11sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView53" />
+                app:layout_constraintStart_toEndOf="@+id/tx7"
+                app:layout_constraintTop_toBottomOf="@+id/removeVehicleResponsablEnterTextView" />
 
             <TextView
-                android:id="@+id/textView57"
+                android:id="@+id/removeVehicleTimeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Tiempo: 1 d 4h 32 min"
+                android:layout_marginTop="4dp"
+                android:text="Cargando..."
                 android:textColor="#000000"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -268,24 +270,108 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView56" />
 
             <TextView
-                android:id="@+id/textView58"
+                android:id="@+id/removeVehicleCostTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-black"
-                android:text="$24.000"
+                android:text="CARGANDO..."
                 android:textColor="#000000"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView57" />
+                app:layout_constraintTop_toBottomOf="@+id/removeVehicleTimeTextView" />
+
+            <TextView
+                android:id="@+id/tx1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:textColor="#000000"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/removeVehicleCurrentDateTextView" />
+
+            <TextView
+                android:id="@+id/tx2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="2dp"
+                android:textColor="#000000"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tx1" />
+
+            <TextView
+                android:id="@+id/tx3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:textColor="#000000"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tx2" />
+
+            <TextView
+                android:id="@+id/tx4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="2dp"
+                android:textColor="#000000"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tx3" />
+
+            <TextView
+                android:id="@+id/tx5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="2dp"
+                android:textColor="#000000"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tx4" />
+
+            <TextView
+                android:id="@+id/tx6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:textColor="#000000"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tx5" />
+
+            <TextView
+                android:id="@+id/tx7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="2dp"
+                android:textColor="#000000"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tx6" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="45dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="45dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="24dp"
             android:orientation="horizontal"
             android:paddingLeft="3dip"
             android:paddingRight="3dip"
@@ -303,7 +389,7 @@
                 <TableRow>
 
                     <Button
-                        android:id="@+id/confirmationGoBackButton"
+                        android:id="@+id/removeVehicleGoBackButton"
                         android:layout_height="40dp"
                         android:layout_marginRight="2dp"
                         android:background="@drawable/pressed_button_background"
@@ -314,7 +400,7 @@
 
 
                     <Button
-                        android:id="@+id/confirmationButton"
+                        android:id="@+id/removeVehicleConfirmationButton"
                         android:layout_height="40dp"
                         android:background="@drawable/button_background"
                         android:text="Confirmar"
@@ -324,8 +410,6 @@
             </TableLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

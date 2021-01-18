@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -21,7 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.parkingapp.model.Time;
+import com.example.parkingapp.utils.Time;
 import com.example.parkingapp.model.Vehicle;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -136,6 +135,7 @@ public class VehicleActivity extends AppCompatActivity implements View.OnTouchLi
                     removeVehicleButton.setBackgroundResource(R.drawable.button_background);
 
                     Intent intent = new Intent(this, RemoveVehicleActivity.class);
+                    intent.putExtra("id", id);
                     startActivity(intent);
                     finish();
 
@@ -209,7 +209,7 @@ public class VehicleActivity extends AppCompatActivity implements View.OnTouchLi
 
         ownerTextView.setText(currentVehicle.getOwnerName());
         ownerPhoneTextView.setText(currentVehicle.getOwnerPhone());
-        plateTextView.setText(currentVehicle.getPlate().charAt(0)+currentVehicle.getPlate().charAt(1)+currentVehicle.getPlate().charAt(2)+"-"+currentVehicle.getPlate().charAt(3)+currentVehicle.getPlate().charAt(4)+currentVehicle.getPlate().charAt(5));
+        plateTextView.setText(""+currentVehicle.getPlate().charAt(0)+""+currentVehicle.getPlate().charAt(1)+""+currentVehicle.getPlate().charAt(2)+"-"+currentVehicle.getPlate().charAt(3)+currentVehicle.getPlate().charAt(4)+currentVehicle.getPlate().charAt(5));
         typeTextView.setText(currentVehicle.getType().toUpperCase());
         responsableAtEnterTextView.setText(currentVehicle.getResponsableAtEnter().toUpperCase());
         timeThread();
@@ -247,37 +247,5 @@ public class VehicleActivity extends AppCompatActivity implements View.OnTouchLi
 
     }
 
-    /*
-    private void loadDatabase() {
-
-        DatabaseReference ref = database.getReference().child("currentVehicles");
-
-        ref.addValueEventListener(
-
-                new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot data) {
-
-                        adapter.clear();
-                        for(DataSnapshot child: data.getChildren()){
-
-                            Vehicle vehicle = child.getValue(Vehicle.class);
-                            adapter.addVehicle(vehicle);
-
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-
-                }
-        );
-    }
-     */
 
 }

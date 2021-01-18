@@ -3,7 +3,10 @@
  * nicolas.penagosm98@gmail.com
  * * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
-package com.example.parkingapp.model;
+package com.example.parkingapp.utils;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Time {
 
@@ -15,6 +18,9 @@ public class Time {
     public final static long MINUTE = 60000;
     public final static long SECOND = 1000;
 
+    // -------------------------------------
+    // Methods
+    // -------------------------------------
     public static String getTimeDayHourMinuteSecond(long start, long end){
 
         String time = "";
@@ -35,6 +41,23 @@ public class Time {
         time = days +" d "+hours+" h "+minutes+" min "+seconds+" s";
 
         return time;
+
+    }
+
+    public static String toDate(long milliseconds){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+        Date resultdate = new Date(milliseconds);
+        return sdf.format(resultdate);
+
+    }
+
+    public static String getCurrentTime(){
+
+        long milliseconds = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+        Date resultdate = new Date(milliseconds);
+        return sdf.format(resultdate);
 
     }
 
