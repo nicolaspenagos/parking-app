@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.parkingapp.model.Ticket;
 import com.example.parkingapp.model.User;
 import com.example.parkingapp.model.Vehicle;
+import com.example.parkingapp.utils.Payment;
 import com.example.parkingapp.utils.Time;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -273,8 +274,11 @@ public class RemoveVehicleActivity extends AppCompatActivity implements View.OnT
         tx7.setText("Salida:");
 
         long currentTime = System.currentTimeMillis();
-        vehicleTimeTextView.setText(Time.getTimeDayHourMinuteSecond(currentVehicle.getEnterTime(), currentTime)+ "   ( "+Time.timeToHours(currentVehicle.getEnterTime(), currentTime)+"h )");
-        costTextView.setText("$24.000");
+        int hours = Time.timeToHours(currentVehicle.getEnterTime(), currentTime);
+        vehicleTimeTextView.setText(Time.getTimeDayHourMinuteSecond(currentVehicle.getEnterTime(), currentTime)+ "   ( "+hours+"h )");
+
+        Payment payment = new Payment(3000,5000,8000,12000,2500,4500,6000,10000,2000,4000,5000,8000,500,10000,8000,7000);
+        costTextView.setText(payment.numberFormat(payment.costByHours(currentVehicle.getType().charAt(0), hours)));
 
         currentVehicle.setResponsableAtExitId(currentUser.getName().toUpperCase());
         currentVehicle.setResponsableAtExitId(currentUser.getId());

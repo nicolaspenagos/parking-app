@@ -6,6 +6,8 @@
 
 package com.example.parkingapp.utils;
 
+import com.example.parkingapp.model.Vehicle;
+
 public class Payment {
 
     // -------------------------------------
@@ -63,7 +65,88 @@ public class Payment {
     // -------------------------------------
     // Methods
     // -------------------------------------
+    public int costByHours(char type, int hours){
 
+        int cost = 0;
+
+        switch (type){
+
+            case 'M':
+
+                if(hours<=4){
+                    return mula1To4;
+                }else if(hours<=8){
+                    return mula4To8;
+                }else if(hours<=12) {
+                    return mula8To12;
+                }else if(hours<=24){
+                    return mula12To24;
+                }else{
+                    return mula12To24 + ((hours-24)*extraHour);
+                }
+
+            case 'T':
+
+                if(hours<=4){
+                    return turbo1To4;
+                }else if(hours<=8){
+                    return turbo4To8;
+                }else if(hours<=12) {
+                    return turbo8To12;
+                }else if(hours<=24){
+                    return turbo12To24;
+                }else{
+                    return turbo12To24 + ((hours-24)*extraHour);
+                }
+
+            case 'A':
+
+                if(hours<=4){
+                    return automovil1To4;
+                }else if(hours<=8){
+                    return automovil4To8;
+                }else if(hours<=12) {
+                    return automovil8To12;
+                }else if(hours<=24){
+                    return automovil12To24;
+                }else{
+                    return automovil12To24 + ((hours-24)*extraHour);
+                }
+
+        }
+
+        return cost;
+
+    }
+
+    public String numberFormat(int number){
+
+        String money = ""+number;
+        String moneyReverse = "";
+
+        for (int i=0; i<money.length(); i++){
+            moneyReverse+=money.charAt(money.length()-i-1);
+        }
+
+
+        String format = "";
+
+            for(int i = 0; i<moneyReverse.length(); i++){
+                if(i%3==0 && i!=0){
+                    format += "."+moneyReverse.charAt(i);
+                }else{
+                    format += moneyReverse.charAt(i);
+                }
+            }
+
+            String formatReverse = "";
+
+        for (int i=0; i<format.length(); i++){
+            formatReverse+=format.charAt(format.length()-i-1);
+        }
+
+        return "$"+ formatReverse;
+    }
 
     // -------------------------------------
     // Getters and setters
