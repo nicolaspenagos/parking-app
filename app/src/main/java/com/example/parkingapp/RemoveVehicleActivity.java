@@ -19,7 +19,9 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.parkingapp.model.Ticket;
 import com.example.parkingapp.model.User;
 import com.example.parkingapp.model.Vehicle;
 import com.example.parkingapp.utils.Time;
@@ -73,6 +75,7 @@ public class RemoveVehicleActivity extends AppCompatActivity implements View.OnT
     private Vehicle currentVehicle;
     private User currentUser;
     private DatabaseReference reference;
+    private Ticket currentTicket;
 
     // -------------------------------------
     // Android methods
@@ -133,7 +136,26 @@ public class RemoveVehicleActivity extends AppCompatActivity implements View.OnT
                 }else if(event.getAction()==MotionEvent.ACTION_UP){
 
                     removeVehicleButton.setBackgroundResource(R.drawable.button_background);
+                    reference.setValue(currentTicket).addOnCompleteListener(
 
+                            task -> {
+
+                                if(task.isSuccessful()){
+
+                                    Toast.makeText(this, "Vehículo retirado.", Toast.LENGTH_LONG).show();
+                                    database.getReference().child("currentVehicles").child(currentVehicle.getPlate()).setValue(null);
+                                    finish();
+
+                                }else{
+
+                                    Toast.makeText(this, "Error, intentelo más tarde.", Toast.LENGTH_LONG).show();
+                                    finish();
+
+                                }
+
+                            }
+
+                    );
 
 
                 }
@@ -209,7 +231,8 @@ public class RemoveVehicleActivity extends AppCompatActivity implements View.OnT
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                         currentVehicle = snapshot.getValue(Vehicle.class);
-                        updateInfo();
+                        if(currentVehicle!=null)
+                         updateInfo();
 
                     }
 
@@ -230,6 +253,8 @@ public class RemoveVehicleActivity extends AppCompatActivity implements View.OnT
         String enterTimeConverted = Time.toDate(enterTime);
         reference = database.getReference().child("tickets").push();
 
+
+
         ticketIdTextView.setText(reference.getKey());
         currentDateTextView.setText(Time.getCurrentTime().toUpperCase());
         ownerNameTextView.setText(currentVehicle.getOwnerName().toUpperCase());
@@ -248,8 +273,12 @@ public class RemoveVehicleActivity extends AppCompatActivity implements View.OnT
         tx7.setText("Salida:");
 
         long currentTime = System.currentTimeMillis();
-        vehicleTimeTextView.setText(Time.getTimeDayHourMinuteSecond(currentVehicle.getEnterTime(), currentTime));
+        vehicleTimeTextView.setText(Time.getTimeDayHourMinuteSecond(currentVehicle.getEnterTime(), currentTime)+ "   ( "+Time.timeToHours(currentVehicle.getEnterTime(), currentTime)+"h )");
         costTextView.setText("$24.000");
+
+        currentVehicle.setResponsableAtExitId(currentUser.getName().toUpperCase());
+        currentVehicle.setResponsableAtExitId(currentUser.getId());
+        currentTicket = new Ticket(reference.getKey(), currentVehicle, 24000, Time.getCurrentTime().toUpperCase());
 
     }
 

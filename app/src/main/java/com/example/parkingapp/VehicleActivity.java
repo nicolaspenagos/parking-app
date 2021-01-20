@@ -136,8 +136,9 @@ public class VehicleActivity extends AppCompatActivity implements View.OnTouchLi
 
                     Intent intent = new Intent(this, RemoveVehicleActivity.class);
                     intent.putExtra("id", id);
-                    startActivity(intent);
                     finish();
+                    startActivity(intent);
+
 
                 }
 
@@ -190,6 +191,7 @@ public class VehicleActivity extends AppCompatActivity implements View.OnTouchLi
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                         currentVehicle = snapshot.getValue(Vehicle.class);
+                        if(currentVehicle!=null)
                         updateInfo();
 
                     }

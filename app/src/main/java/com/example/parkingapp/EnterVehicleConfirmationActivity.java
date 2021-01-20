@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.parkingapp.model.Vehicle;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +38,7 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
     // Firebase
     // -------------------------------------
     private FirebaseDatabase database;
+    private FirebaseAuth auth;
 
     // -------------------------------------
     // XML references
@@ -207,6 +209,8 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
         if(isNew){
 
             Vehicle vehicle = new Vehicle( currentPlate, UUID.randomUUID().toString(),currentName, currentPhone, currentType, getIntent().getExtras().getString("userName"), getIntent().getExtras().getString("userId"), System.currentTimeMillis());
+            vehicle.setResponsableAtEnterId(getIntent().getExtras().getString("userId"));
+
             ref.setValue(vehicle).addOnCompleteListener(
 
                     task -> {

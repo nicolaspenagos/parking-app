@@ -61,4 +61,15 @@ public class Time {
 
     }
 
+    public static int timeToHours(long start, long end){
+
+        long dif = end-start;
+        long time = dif/HOUR;
+
+        time = (dif%HOUR != 0) ? time+1 : time;
+
+        return (int)time;
+
+    }
+
 }
