@@ -8,6 +8,8 @@ package com.example.parkingapp.utils;
 
 import com.example.parkingapp.model.Vehicle;
 
+import java.util.Calendar;
+
 public class Payment {
 
     // -------------------------------------
@@ -65,9 +67,30 @@ public class Payment {
     // -------------------------------------
     // Methods
     // -------------------------------------
-    public int costByHours(char type, int hours){
+    public int costByHours(char type, int hours, boolean hosted){
 
         int cost = 0;
+
+        if(hosted){
+
+            int days = hours/24;
+
+            Calendar rightNow = Calendar.getInstance();
+            int currentHourIn24Format = rightNow.get(Calendar.HOUR_OF_DAY);
+
+            if(currentHourIn24Format>13)
+                days++;
+
+            if(type=='M')
+                return days*hostedMula;
+
+            if(type=='A')
+                return days*hostedAutomovil;
+
+            if(type=='T')
+                return days*hostedTurbo;
+
+        }
 
         switch (type){
 

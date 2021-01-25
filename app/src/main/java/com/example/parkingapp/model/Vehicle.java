@@ -32,6 +32,7 @@ public class Vehicle {
     private String responsableAtExit;
     private String responsableAtExitId;
     private long enterTime;
+    private boolean hosted;
 
     // -------------------------------------
     // Constructors
@@ -40,7 +41,7 @@ public class Vehicle {
 
     }
 
-    public Vehicle(String plate, String id, String ownerName, String ownerPhone, String type, String responsableAtEnter, String responsableAtEnterId, Long enterTime){
+    public Vehicle(String plate, String id, String ownerName, String ownerPhone, String type, String responsableAtEnter, String responsableAtEnterId, Long enterTime, boolean hosted){
 
         this.plate = plate;
         this.id = id;
@@ -52,6 +53,7 @@ public class Vehicle {
         this.responsableAtExit = "";
         this.responsableAtExitId = "";
         this.enterTime = enterTime;
+        this.hosted = hosted;
 
     }
 
@@ -126,4 +128,9 @@ public class Vehicle {
     public long getEnterTime() { return enterTime; }
 
     public void setEnterTime(long enterTime) { this.enterTime = enterTime; }
+
+    public boolean isHosted() { return hosted; }
+
+    public void setHosted(boolean hosted) { this.hosted = hosted; }
+
 }

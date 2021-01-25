@@ -61,12 +61,15 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
     private CheckBox turboCheckBox;
     private CheckBox automovilCheckBox;
     private CheckBox mulaCheckBox;
+    private CheckBox hostedCheckBox;
+    private CheckBox parkingCheckBox;
     private Button nextButton;
 
     // -------------------------------------
     // Global assets
     // -------------------------------------
     private char currentType;
+    private boolean hosted;
 
     // -------------------------------------
     // Android methods
@@ -93,6 +96,8 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
         automovilCheckBox = findViewById(R.id.automovilCheckBox);
         mulaCheckBox = findViewById(R.id.mulaCheckBox);
         nextButton = findViewById(R.id.nextButton);
+        hostedCheckBox = findViewById(R.id.hostedCheckBox);
+        parkingCheckBox = findViewById(R.id.parkingCheckBox);
 
         enterVehicleGoBackButton.setOnTouchListener(this);
         nextButton.setOnTouchListener(this);
@@ -100,6 +105,8 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
         turboCheckBox.setOnClickListener(this);
         automovilCheckBox.setOnClickListener(this);
         mulaCheckBox.setOnClickListener(this);
+        hostedCheckBox.setOnClickListener(this);
+        parkingCheckBox.setOnClickListener(this);
 
         addTextCheckers();
 
@@ -164,6 +171,7 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
                            intent.putExtra("type", type);
                            intent.putExtra("userId", getIntent().getExtras().getString("userId"));
                            intent.putExtra("userName", getIntent().getExtras().getString("userName"));
+                           intent.putExtra("hosted", hosted);
 
                            startActivityForResult(intent, 1);
 
@@ -215,6 +223,28 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
                     mulaCheckBox.setChecked(false);
                     automovilCheckBox.setChecked(false);
                     currentType = Vehicle.TURBO;
+                }
+
+                break;
+
+            case R.id.hostedCheckBox:
+
+                if(hostedCheckBox.isChecked()){
+
+                    parkingCheckBox.setChecked(false);
+                    hosted = true;
+
+                }
+
+                break;
+
+            case R.id.parkingCheckBox:
+
+                if(parkingCheckBox.isChecked()){
+
+                    hostedCheckBox.setChecked(false);
+                    hosted = false;
+
                 }
 
                 break;
@@ -474,8 +504,9 @@ public class EnterVehicleActivity extends AppCompatActivity implements View.OnTo
 
     public boolean verifyVehicleData(String ownerName, String ownerPhone, String plate1, String plate2, String plate3, String plate4, String plate5, String plate6){
 
+        boolean hosted = !(!hostedCheckBox.isChecked() && !parkingCheckBox.isChecked());
         boolean checkBoxesOk = !(!mulaCheckBox.isChecked() && !automovilCheckBox.isChecked() && !turboCheckBox.isChecked());
-       return ownerName!=null && !ownerName.equals("") && ownerPhone!=null && !ownerPhone.equals("") && plate1!=null && !plate1.equals("") && plate2!=null && !plate2.equals("") && plate3!=null && !plate3.equals("") && plate4!=null && !plate4.equals("") && plate5!=null && !plate5.equals("") && plate6!=null && !plate6.equals("") && checkBoxesOk;
+       return ownerName!=null && !ownerName.equals("") && ownerPhone!=null && !ownerPhone.equals("") && plate1!=null && !plate1.equals("") && plate2!=null && !plate2.equals("") && plate3!=null && !plate3.equals("") && plate4!=null && !plate4.equals("") && plate5!=null && !plate5.equals("") && plate6!=null && !plate6.equals("") && checkBoxesOk && hosted;
 
     }
 

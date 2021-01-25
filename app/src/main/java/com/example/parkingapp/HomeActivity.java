@@ -15,6 +15,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -107,6 +111,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
             adapter = new VehicleAdapter();
             vehiclesGridView.setAdapter(adapter);
 
+            addTextCheckers();
             recoverUser();
             loadDatabase();
 
@@ -195,6 +200,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
 
                     searchButton.setBackgroundResource(R.drawable.button_background);
+
 
                 }
 
@@ -296,6 +302,246 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
 
                 }
         );
+    }
+
+    public void searchVehicle(){
+        
+
+    }
+
+    public void addTextCheckers() {
+
+        plate4EditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        plate5EditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        plate6EditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        plate1EditText.addTextChangedListener(
+
+                new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String string = s.toString();
+
+                        if (string.length() > 1) {
+                            string = "" + string.charAt(0);
+                            plate1EditText.setText(string);
+                        }
+
+                        if (!string.equals(string.toUpperCase())) {
+                            string = string.toUpperCase();
+                            plate1EditText.setText(string);
+                        }
+
+                        if (string.length() > 0) {
+                            char character = string.charAt(0);
+                            if (!Character.isLetter(character)) {
+                                plate1EditText.getText().clear();
+                            }
+                        }
+
+                    }
+
+                }
+        );
+
+        plate2EditText.addTextChangedListener(
+
+                new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String string = s.toString();
+
+                        if(string.length()>1){
+                            string = ""+string.charAt(0);
+                            plate2EditText.setText(string);
+                        }
+
+                        if(!string.equals(string.toUpperCase())){
+                            string = string.toUpperCase();
+                            plate2EditText.setText(string);
+                        }
+
+                        if(string.length()>0){
+                            char character = string.charAt(0);
+                            if(!Character.isLetter(character)){
+                                plate2EditText.getText().clear();
+                            }
+                        }
+                    }
+
+                }
+        );
+
+        plate3EditText.addTextChangedListener(
+
+                new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String string = s.toString();
+
+                        if(string.length()>1){
+                            string = ""+string.charAt(0);
+                            plate3EditText.setText(string);
+                        }
+
+                        if(!string.equals(string.toUpperCase())){
+                            string = string.toUpperCase();
+                            plate3EditText.setText(string);
+                        }
+
+                        if(string.length()>0){
+                            char character = string.charAt(0);
+                            if(!Character.isLetter(character)){
+                                plate3EditText.getText().clear();
+                            }
+                        }
+                    }
+
+                }
+        );
+
+        plate4EditText.addTextChangedListener(
+
+                new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String string = s.toString();
+
+                        if(string.length()>1){
+                            string = ""+string.charAt(0);
+                            plate4EditText.setText(string);
+                        }
+
+                        if(string.length()>0){
+                            char character = string.charAt(0);
+                            if(!Character.isDigit(character)){
+                                plate4EditText.getText().clear();
+                            }
+                        }
+                    }
+
+                }
+        );
+
+        plate5EditText.addTextChangedListener(
+
+                new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String string = s.toString();
+
+                        if(string.length()>1){
+                            string = ""+string.charAt(0);
+                            plate5EditText.setText(string);
+                        }
+
+                        if(string.length()>0){
+                            char character = string.charAt(0);
+                            if(!Character.isDigit(character)){
+                                plate5EditText.getText().clear();
+                            }
+                        }
+                    }
+
+                }
+        );
+
+        plate6EditText.addTextChangedListener(
+
+                new TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String string = s.toString();
+
+                        if(string.length()>1){
+                            string = ""+string.charAt(0);
+                            plate6EditText.setText(string);
+                        }
+
+                        if(string.length()>0){
+                            char character = string.charAt(0);
+                            if(!Character.isDigit(character)){
+                                plate6EditText.getText().clear();
+                            }
+                        }
+                    }
+
+                }
+        );
+
+
     }
 
 }

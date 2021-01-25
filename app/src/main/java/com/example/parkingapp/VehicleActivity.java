@@ -209,7 +209,7 @@ public class VehicleActivity extends AppCompatActivity implements View.OnTouchLi
 
     public void updateInfo(){
 
-        ownerTextView.setText(currentVehicle.getOwnerName());
+        ownerTextView.setText(currentVehicle.getOwnerName()+(currentVehicle.isHosted()?" (Hospedado)":""));
         ownerPhoneTextView.setText(currentVehicle.getOwnerPhone());
         plateTextView.setText(""+currentVehicle.getPlate().charAt(0)+""+currentVehicle.getPlate().charAt(1)+""+currentVehicle.getPlate().charAt(2)+"-"+currentVehicle.getPlate().charAt(3)+currentVehicle.getPlate().charAt(4)+currentVehicle.getPlate().charAt(5));
         typeTextView.setText(currentVehicle.getType().toUpperCase());

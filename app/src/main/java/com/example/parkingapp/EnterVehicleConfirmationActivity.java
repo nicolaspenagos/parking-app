@@ -47,6 +47,7 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
     private TextView telConfirmationTextView;
     private TextView plateConfirmationTextView;
     private TextView typeConfirmationTextView;
+    private TextView hostedTextView;
     private Button goBackConfirmationButton;
     private Button confirmationButton;
     private ImageView goBackArrowConfirmationButton;
@@ -77,6 +78,7 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
         goBackConfirmationButton = findViewById(R.id.confirmationGoBackButton);
         confirmationButton = findViewById(R.id.confirmationButton);
         goBackArrowConfirmationButton = findViewById(R.id.goBackArrowConfirmationButton);
+        hostedTextView = findViewById(R.id.hostedTextView);
 
         Bundle extras = getIntent().getExtras();
 
@@ -86,6 +88,7 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
         currentName = extras.getString("ownerName");
 
         String plate = extras.getString("plate");
+        hostedTextView.setText((getIntent().getExtras().getBoolean("hosted"))?"SI":"NO");
         String plateToShow = "";
         currentPlate = plate;
 
@@ -208,7 +211,7 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
 
         if(isNew){
 
-            Vehicle vehicle = new Vehicle( currentPlate, UUID.randomUUID().toString(),currentName, currentPhone, currentType, getIntent().getExtras().getString("userName"), getIntent().getExtras().getString("userId"), System.currentTimeMillis());
+            Vehicle vehicle = new Vehicle( currentPlate, UUID.randomUUID().toString(),currentName, currentPhone, currentType, getIntent().getExtras().getString("userName"), getIntent().getExtras().getString("userId"), System.currentTimeMillis(), getIntent().getExtras().getBoolean("hosted"));
             vehicle.setResponsableAtEnterId(getIntent().getExtras().getString("userId"));
 
             ref.setValue(vehicle).addOnCompleteListener(

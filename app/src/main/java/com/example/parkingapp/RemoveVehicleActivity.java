@@ -170,8 +170,7 @@ public class RemoveVehicleActivity extends AppCompatActivity implements View.OnT
                 }else if(event.getAction()==MotionEvent.ACTION_UP){
 
                     goArrowBackButton.setImageResource(R.drawable.go_back_arrow);
-
-
+                    finish();
 
                 }
 
@@ -184,8 +183,7 @@ public class RemoveVehicleActivity extends AppCompatActivity implements View.OnT
                 }else if(event.getAction()==MotionEvent.ACTION_UP){
 
                     goBackButton.setBackgroundResource(R.drawable.pressed_button_background);
-
-
+                    finish();
 
                 }
 
@@ -258,7 +256,7 @@ public class RemoveVehicleActivity extends AppCompatActivity implements View.OnT
 
         ticketIdTextView.setText(reference.getKey());
         currentDateTextView.setText(Time.getCurrentTime().toUpperCase());
-        ownerNameTextView.setText(currentVehicle.getOwnerName().toUpperCase());
+        ownerNameTextView.setText(currentVehicle.getOwnerName().toUpperCase()+(currentVehicle.isHosted()?" (Hospedado)":""));
         ownerPhoneTextView.setText(currentVehicle.getOwnerPhone());
         platesTextView.setText(""+currentVehicle.getPlate().charAt(0)+currentVehicle.getPlate().charAt(1)+currentVehicle.getPlate().charAt(2)+"-"+currentVehicle.getPlate().charAt(3)+currentVehicle.getPlate().charAt(4)+currentVehicle.getPlate().charAt(5));
         typeTextView.setText(currentVehicle.getType().toUpperCase());
@@ -278,7 +276,7 @@ public class RemoveVehicleActivity extends AppCompatActivity implements View.OnT
         vehicleTimeTextView.setText(Time.getTimeDayHourMinuteSecond(currentVehicle.getEnterTime(), currentTime)+ "   ( "+hours+"h )");
 
         Payment payment = new Payment(3000,5000,8000,12000,2500,4500,6000,10000,2000,4000,5000,8000,500,10000,8000,7000);
-        costTextView.setText(payment.numberFormat(payment.costByHours(currentVehicle.getType().charAt(0), hours)));
+        costTextView.setText(payment.numberFormat(payment.costByHours(currentVehicle.getType().charAt(0), hours, currentVehicle.isHosted())));
 
         currentVehicle.setResponsableAtExitId(currentUser.getName().toUpperCase());
         currentVehicle.setResponsableAtExitId(currentUser.getId());

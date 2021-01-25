@@ -394,7 +394,7 @@
                         android:layout_marginRight="2dp"
                         android:background="@drawable/pressed_button_background"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Volver"
+                        android:text="Cancelar"
                         android:textAllCaps="false"
                         android:textColor="#FFFFFF" />
 
