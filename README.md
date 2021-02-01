@@ -2,7 +2,7 @@
 
 This in an android App developed for the Hotel Terrasol Cencar located in Cali, Colombia. The main purpose of the app is to count the vehicle's parking time and calculate the charge in real time. In addition, the App uses the FirebaseDatabase and FirebaseAuth technologies for hosting information and managing credentials.
 
-![userflow](https://user-images.githubusercontent.com/47872252/106411859-408c6b80-6414-11eb-9716-30ed027f9440.png)
+![uf](https://user-images.githubusercontent.com/47872252/106412036-b0025b00-6414-11eb-9892-e711f6fe44ce.png)
 
 
 ## Made by
