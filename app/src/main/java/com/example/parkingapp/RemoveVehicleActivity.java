@@ -33,6 +33,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /*
  * This class will allow to remove a vehicle from the parking.
  */
@@ -137,11 +140,21 @@ public class RemoveVehicleActivity extends AppCompatActivity implements View.OnT
                 }else if(event.getAction()==MotionEvent.ACTION_UP){
 
                     removeVehicleButton.setBackgroundResource(R.drawable.button_background);
+
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                    Date date = new Date();
+                    String dateString = formatter.format(date).toString();
+
+                    database.getReference().child("dates").child(dateString).child("exits").child(currentTicket.getId()).setValue(currentTicket);
+
+
                     reference.setValue(currentTicket).addOnCompleteListener(
 
                             task -> {
 
                                 if(task.isSuccessful()){
+
+
 
                                     Toast.makeText(this, "Vehículo retirado.", Toast.LENGTH_LONG).show();
                                     database.getReference().child("currentVehicles").child(currentVehicle.getPlate()).setValue(null);

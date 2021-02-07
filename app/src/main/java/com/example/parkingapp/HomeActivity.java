@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.parkingapp.model.User;
 import com.example.parkingapp.model.Vehicle;
@@ -63,13 +64,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
     private EditText plate5EditText;
     private EditText plate6EditText;
     private GridView vehiclesGridView;
+    private TextView numbersOfVehiclesTextView;
+    private Button recordButton;
 
     // -------------------------------------
     // Global assets
     // -------------------------------------
     private User currentUser;
     private VehicleAdapter adapter;
-
+    private Vehicle vehicleToSearch;
 
     // -------------------------------------
     // Android methods
@@ -102,11 +105,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
             plate5EditText = findViewById(R.id.plate5EditText);
             plate6EditText = findViewById(R.id.plate6EditText);
             vehiclesGridView = findViewById(R.id.vehiclesGridView);
+            numbersOfVehiclesTextView = findViewById(R.id.numberOfVehiclesTextView);
+            recordButton = findViewById(R.id.recordButton);
 
             logoutButton.setOnTouchListener(this);
             profileButton.setOnTouchListener(this);
             enterVehicleButton.setOnTouchListener(this);
             searchButton.setOnTouchListener(this);
+            recordButton.setOnTouchListener(this);
 
             adapter = new VehicleAdapter();
             vehiclesGridView.setAdapter(adapter);
@@ -200,15 +206,47 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
                 }else if(event.getAction() == MotionEvent.ACTION_UP){
 
                     searchButton.setBackgroundResource(R.drawable.button_background);
-
+                    searchVehicle();
 
                 }
 
                 break;
+
+            case R.id.recordButton:
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    recordButton.setBackgroundResource(R.drawable.pressed_button_background);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+
+                    recordButton.setBackgroundResource(R.drawable.button_background);
+                    if(isOnline()){
+
+                        Intent intent = new Intent(this, RecordActivity.class);
+                        startActivity(intent);
+                        finish();
+
+                    }
+
+                }
+
+                break;
+
         }
         return true;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        plate1EditText.setText("");
+        plate2EditText.setText("");
+        plate3EditText.setText("");
+        plate4EditText.setText("");
+        plate5EditText.setText("");
+        plate6EditText.setText("");
+
+    }
 
     // -------------------------------------
     // User Authentication
@@ -277,12 +315,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
 
         DatabaseReference ref = database.getReference().child("currentVehicles");
 
+
         ref.addValueEventListener(
 
                 new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot data) {
+
 
                         adapter.clear();
                         for(DataSnapshot child: data.getChildren()){
@@ -291,7 +331,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
                             adapter.addVehicle(vehicle);
 
                         }
-
+                        updatedNumberOfVehicles(adapter.getCount());
 
                     }
 
@@ -305,8 +345,74 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     public void searchVehicle(){
-        
 
+        if(isOnline()){
+
+            String p1, p2,p3,p4,p5,p6;
+
+            p1 = plate1EditText.getText().toString();
+            p2 = plate2EditText.getText().toString();
+            p3 = plate3EditText.getText().toString();
+            p4 = plate4EditText.getText().toString();
+            p5 = plate5EditText.getText().toString();
+            p6 = plate6EditText.getText().toString();
+
+
+           if(checkSearchData(p1,p2,p3,p4,p5,p6)){
+
+               String plate = p1+p2+p3+p4+p5+p6;
+
+               vehicleToSearch = null;
+               DatabaseReference ref = database.getReference().child("currentVehicles").child(plate);
+
+               ref.addValueEventListener(
+
+                       new ValueEventListener() {
+
+                           @Override
+                           public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                               vehicleToSearch = snapshot.getValue(Vehicle.class);
+                               if(vehicleToSearch!=null){
+                                   showVehicle(plate);
+                               }else{
+                                   showMessage();
+                               }
+
+                           }
+
+                           @Override
+                           public void onCancelled(@NonNull DatabaseError error) {
+
+                           }
+
+                       }
+
+               );
+
+
+           }else{
+               Toast.makeText(this, "La placa debe estar completa para continuar", Toast.LENGTH_LONG).show();
+           }
+
+        }
+
+    }
+
+    public void showMessage(){
+        Toast.makeText(this, "Esta placa NO se encuentra registrada.", Toast.LENGTH_LONG).show();
+    }
+
+    public void showVehicle(String plate){
+
+        Intent intent = new Intent(this, VehicleActivity.class);
+        intent.putExtra("id", plate);
+        startActivity(intent);
+
+    }
+
+    public boolean checkSearchData(String p1, String p2, String p3, String p4, String p5, String p6){
+        return p1!=null&&!p1.equals("")&&p2!=null&&!p2.equals("")&&p3!=null&&!p3.equals("")&&p4!=null&&!p4.equals("")&&p5!=null&&!p5.equals("")&&p6!=null&&!p6.equals("");
     }
 
     public void addTextCheckers() {
@@ -542,6 +648,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
         );
 
 
+    }
+
+    public void updatedNumberOfVehicles(int numberOfVehicles){
+        numbersOfVehiclesTextView.setText(""+numberOfVehicles+" vehículos");
     }
 
 }

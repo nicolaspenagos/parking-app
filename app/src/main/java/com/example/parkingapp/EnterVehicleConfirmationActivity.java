@@ -27,6 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 /*
@@ -214,6 +216,11 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
             Vehicle vehicle = new Vehicle( currentPlate, UUID.randomUUID().toString(),currentName, currentPhone, currentType, getIntent().getExtras().getString("userName"), getIntent().getExtras().getString("userId"), System.currentTimeMillis(), getIntent().getExtras().getBoolean("hosted"));
             vehicle.setResponsableAtEnterId(getIntent().getExtras().getString("userId"));
 
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            Date date = new Date();
+            String dateString = formatter.format(date).toString();
+            database.getReference().child("dates").child(dateString).child("entrances").child(vehicle.getPlate()).setValue(vehicle);
+
             ref.setValue(vehicle).addOnCompleteListener(
 
                     task -> {
@@ -222,6 +229,7 @@ public class EnterVehicleConfirmationActivity extends AppCompatActivity implemen
                             Toast.makeText(this, "Vehículo ingresado.", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent();
                             setResult(RESULT_OK, intent);
+
                             finish();
 
                         }else{
