@@ -289,11 +289,12 @@ public class RemoveVehicleActivity extends AppCompatActivity implements View.OnT
         vehicleTimeTextView.setText(Time.getTimeDayHourMinuteSecond(currentVehicle.getEnterTime(), currentTime)+ "   ( "+hours+"h )");
 
         Payment payment = new Payment(3000,5000,8000,12000,2500,4500,6000,10000,2000,4000,5000,8000,500,10000,8000,7000);
+
         costTextView.setText(payment.numberFormat(payment.costByHours(currentVehicle.getType().charAt(0), hours, currentVehicle.isHosted())));
 
         currentVehicle.setResponsableAtExitId(currentUser.getName().toUpperCase());
         currentVehicle.setResponsableAtExitId(currentUser.getId());
-        currentTicket = new Ticket(reference.getKey(), currentVehicle, 24000, Time.getCurrentTime().toUpperCase());
+        currentTicket = new Ticket(reference.getKey(), currentVehicle, payment.costByHours(currentVehicle.getType().charAt(0), hours, currentVehicle.isHosted()), Time.getCurrentTime().toUpperCase(), hours);
 
     }
 

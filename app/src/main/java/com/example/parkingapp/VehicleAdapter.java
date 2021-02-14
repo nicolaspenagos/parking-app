@@ -5,10 +5,7 @@
  */
 package com.example.parkingapp;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +71,7 @@ public class VehicleAdapter extends BaseAdapter {
     public View getView(int position, View row, ViewGroup list) {
 
         LayoutInflater inflater = LayoutInflater.from(list.getContext());
-        View rowView = inflater.inflate(R.layout.row, null);
+        View rowView = inflater.inflate(R.layout.plate_layout, null);
 
         TextView plateTextView = rowView.findViewById(R.id.plateRowTextView);
         TextView typeTextView = rowView.findViewById(R.id.typeRowTextView);

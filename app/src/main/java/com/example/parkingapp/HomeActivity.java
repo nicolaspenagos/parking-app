@@ -223,7 +223,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnTouchListe
 
                         Intent intent = new Intent(this, RecordActivity.class);
                         startActivity(intent);
-                        finish();
 
                     }
 

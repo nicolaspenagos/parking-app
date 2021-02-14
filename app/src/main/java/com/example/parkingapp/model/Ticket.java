@@ -18,7 +18,7 @@ public class Ticket {
     private Vehicle vehicle;
     private int cost;
     private String date;
-
+    private int hours;
 
     // -------------------------------------
     // Constructors
@@ -27,12 +27,13 @@ public class Ticket {
 
     }
 
-    public Ticket(String id, Vehicle vehicle, int cost, String date) {
+    public Ticket(String id, Vehicle vehicle, int cost, String date, int hours) {
 
         this.id = id;
         this.vehicle = vehicle;
         this.cost = cost;
         this.date = date;
+        this.hours = hours;
 
     }
 
@@ -71,4 +72,11 @@ public class Ticket {
         this.date = date;
     }
 
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
 }
