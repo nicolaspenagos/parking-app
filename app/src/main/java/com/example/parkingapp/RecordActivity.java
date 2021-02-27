@@ -6,7 +6,6 @@
 package com.example.parkingapp;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -28,13 +27,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.parkingapp.adapters.EntrancesAdapter;
+import com.example.parkingapp.adapters.ExitsAdapter;
 import com.example.parkingapp.model.Ticket;
+import com.example.parkingapp.model.Vehicle;
+import com.example.parkingapp.utils.Payment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /*
  * This class will allow to go to the whole record of the database.
@@ -54,6 +60,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnTouchLis
     private CheckBox exitsCheckBox;
     private TextView totalAmountOfVehicles;
     private TextView totalAmountMoney;
+    private TextView recordTitleTextView;
 
     // -------------------------------------
     // Firebase
@@ -69,6 +76,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnTouchLis
     private EntrancesAdapter entrancesAdapter;
     private int totalVehicles;
     private int totalMoney;
+    private Payment payment;
 
     // -------------------------------------
     // Android methods
@@ -95,6 +103,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnTouchLis
             exitsCheckBox = findViewById(R.id.exitsCheckBox);
             totalAmountOfVehicles = findViewById(R.id.numberOfVehicles);
             totalAmountMoney = findViewById(R.id.money);
+            recordTitleTextView = findViewById(R.id.recordTitleTextView);
 
             loadButton.setOnTouchListener(this);
             goBackButton.setOnTouchListener(this);
@@ -103,11 +112,28 @@ public class RecordActivity extends AppCompatActivity implements View.OnTouchLis
 
             exitsAdapter = new ExitsAdapter();
             dataListView.setAdapter(exitsAdapter);
+            entrancesAdapter = new EntrancesAdapter();
+
 
             addDateCheckers();
 
             exitsCheckBox.setChecked(true);
+            exitsCheckBox.setEnabled(false);
+            recordTitleTextView.setText("SALIDAS");
             dataToLoad = true;
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            Date date = new Date();
+            String dateString = formatter.format(date).toString();
+
+            String[] parts = dateString.split("-");
+            day.setText(parts[0]);
+            month.setText(parts[1]);
+            year.setText(parts[2]);
+
+            loadData();
+
+            payment = new Payment();
 
         }
 
@@ -261,9 +287,18 @@ public class RecordActivity extends AppCompatActivity implements View.OnTouchLis
 
                 if(entrancesCheckBox.isChecked()){
 
-                    exitsCheckBox.setChecked(false);
-                    dataToLoad = true;
-                    loadData();
+                    if(exitsCheckBox.isChecked()){
+
+                        exitsCheckBox.setEnabled(true);
+                        exitsCheckBox.setChecked(false);
+                        entrancesCheckBox.setEnabled(false);
+                        recordTitleTextView.setText("ENTRADAS");
+                        dataListView.setAdapter(entrancesAdapter);
+                        dataToLoad = false;
+
+                        loadData();
+
+                    }
 
                 }
 
@@ -272,11 +307,24 @@ public class RecordActivity extends AppCompatActivity implements View.OnTouchLis
 
             case R.id.exitsCheckBox:
 
-                if(exitsCheckBox.isChecked()){
 
-                    entrancesCheckBox.setChecked(false);
-                    dataToLoad = false;
-                    loadData();
+                if(entrancesCheckBox.isChecked()){
+
+                    if(exitsCheckBox.isChecked()){
+
+                        if(entrancesCheckBox.isChecked()){
+
+                            entrancesCheckBox.setChecked(false);
+                            dataToLoad = true;
+                            entrancesCheckBox.setEnabled(true);
+                            exitsCheckBox.setEnabled(false);
+                            recordTitleTextView.setText("SALIDAS");
+                            dataListView.setAdapter(exitsAdapter);
+
+                            loadData();
+
+                        }
+                }
 
                 }
 
@@ -308,10 +356,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnTouchLis
 
                 if(dataToLoad){
 
-
-
                     DatabaseReference exitsRef = database.getReference().child("dates").child(date).child("exits");
-                    Toast.makeText(this, "Hola"+ exitsRef.getKey(), Toast.LENGTH_LONG).show();
                     exitsRef.addValueEventListener(
 
                             new ValueEventListener() {
@@ -332,8 +377,17 @@ public class RecordActivity extends AppCompatActivity implements View.OnTouchLis
                                     }
 
                                     runOnUiThread(()->{
-                                        totalAmountOfVehicles.setText("Total Vehículos: "+totalVehicles);
-                                        totalAmountMoney.setText("$"+totalMoney);
+
+                                        totalAmountOfVehicles.setText("Total Vehículos: "+ exitsAdapter.getCount());
+                                        totalAmountMoney.setText(payment.numberFormat(totalMoney));
+
+                                        if(totalVehicles == 0){
+
+                                            totalAmountOfVehicles.setText("No hay registros para este día.");
+                                            totalAmountMoney.setText("");
+
+                                        }
+
                                     });
 
                                 }
@@ -346,6 +400,34 @@ public class RecordActivity extends AppCompatActivity implements View.OnTouchLis
                     );
 
                 }else{
+
+                    DatabaseReference entrancesRef = database.getReference().child("dates").child(date).child("entrances");
+                    entrancesRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot data) {
+
+
+                            entrancesAdapter.clear();
+                            totalVehicles = 0;
+
+                            for(DataSnapshot child: data.getChildren()){
+
+                                Vehicle vehicle = child.getValue(Vehicle.class);
+                                totalVehicles++;
+                                entrancesAdapter.addEntrance(vehicle);
+
+                            }
+
+                            totalAmountMoney.setText("");
+                            totalAmountOfVehicles.setText("Total Vehículos: "+entrancesAdapter.getCount());
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
 
                 }
 
