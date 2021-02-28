@@ -1,11 +1,15 @@
 package com.example.parkingapp.adapters;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.parkingapp.ExitActivity;
 import com.example.parkingapp.R;
 import com.example.parkingapp.model.Ticket;
 import com.example.parkingapp.utils.Payment;
@@ -82,6 +86,18 @@ public class ExitsAdapter extends BaseAdapter {
         time.setText(""+ticket.getHours()+"h");
         price.setText(payment.numberFormat(ticket.getCost()));
         counter.setText(""+(position+1));
+
+        view.setOnClickListener(
+                (v)->{
+
+
+                    Log.e("debug", "hola");
+                    Intent intent = new Intent(view.getContext(), ExitActivity.class);
+                    intent.putExtra("ticket", ticket);
+                    view.getContext().startActivity(intent);
+
+                }
+        );
 
         return view;
 

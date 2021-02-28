@@ -292,7 +292,7 @@ public class RemoveVehicleActivity extends AppCompatActivity implements View.OnT
 
         costTextView.setText(payment.numberFormat(payment.costByHours(currentVehicle.getType().charAt(0), hours, currentVehicle.isHosted())));
 
-        currentVehicle.setResponsableAtExitId(currentUser.getName().toUpperCase());
+        currentVehicle.setResponsableAtExit(currentUser.getName().toUpperCase());
         currentVehicle.setResponsableAtExitId(currentUser.getId());
         currentTicket = new Ticket(reference.getKey(), currentVehicle, payment.costByHours(currentVehicle.getType().charAt(0), hours, currentVehicle.isHosted()), Time.getCurrentTime().toUpperCase(), hours);
 

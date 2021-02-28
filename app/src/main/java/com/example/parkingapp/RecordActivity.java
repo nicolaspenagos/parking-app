@@ -421,6 +421,10 @@ public class RecordActivity extends AppCompatActivity implements View.OnTouchLis
                             totalAmountMoney.setText("");
                             totalAmountOfVehicles.setText("Total Vehículos: "+entrancesAdapter.getCount());
 
+                            if(totalVehicles == 0){
+                                totalAmountOfVehicles.setText("No hay registros para este día.");
+                            }
+
                         }
 
                         @Override

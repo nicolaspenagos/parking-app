@@ -7,10 +7,12 @@ package com.example.parkingapp.model;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
+
 /*
  * This class will represents each vehicle registered in the app.
  */
-public class Vehicle {
+public class Vehicle implements Serializable {
 
     // -------------------------------------
     // Constants

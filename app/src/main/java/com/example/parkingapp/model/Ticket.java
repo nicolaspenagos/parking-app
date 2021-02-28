@@ -6,10 +6,12 @@
 
 package com.example.parkingapp.model;
 
+import java.io.Serializable;
+
 /*
  * This class will represents a removed vehicle.
  */
-public class Ticket {
+public class Ticket implements Serializable {
 
     // -------------------------------------
     // Atributtes
